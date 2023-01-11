@@ -195,21 +195,7 @@ $attribute = new Attribute();
                     ])->label(false)
                     ?>
                 </div>
-                <div class="col-lg-4 col-sm-3">
-                    <label><?= Yii::t('app', 'Ընտրեք տեսակը') ?></label>
-                    <?=
-                    $form->field($product, 'sub_category', ['template' => $template])->widget(Select2::className(), [
-                        'data' => [0 => 'Վաճառք', 1 => 'Վարձակալություն'],
-                        'language' => Yii::$app->language,
-                        'options' => ['placeholder' => Yii::t('app', 'Ընտրեք տեսակը'), 'value' => $subcategory], //'onchange'=>'getProductAttr(this.value,"'.Yii::$app->language.'")'
-                        'pluginOptions' => [
-                            'allowClear' => true,
-                            'multiple' => false,
-                        ],
-                        'pluginLoading' => false,
-                    ])->label(false)
-                    ?>
-                </div>
+
                 <div class="col-lg-4 col-sm-3">
                     <label><?= Yii::t('app', 'Select Status') ?></label>
 
@@ -281,45 +267,7 @@ $attribute = new Attribute();
 
                 </div>
             </div>
-            
-            <div class="row mt15">
                 <div class="col-lg-4 col-sm-7">
-                    <!--                    <div class="row">-->
-                    <!--                        <div class="col-lg-9">-->
-                    <div class="slider-wrap flex-div">
-                        <label>Հարկ</label>
-                        <div class="values" style="display: flex;justify-content: flex-start;">
-                            <div><span><?= Yii::t('app', 'From') ?></span>
-                                <input type="text" name="floor-from" class="sliderValue"
-                                       data-index="0" value="<?= Yii::$app->request->getQueryParam('floor-from', 0) ?>"></div>
-                            <div style="margin-left: 15px;"><span><?= Yii::t('app', 'To') ?></span>
-                                <input type="text" name="floor-to" class="sliderValue"
-                                       data-index="1" value="<?= Yii::$app->request->getQueryParam('floor-to', 0) ?>"></div>
-                        </div>
-                        <!--                            </div>-->
-                        <!--                        </div>-->
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-7">
-<!--                    <div class="row">-->
-<!--                        <div class="col-lg-9">-->
-                            <div class="slider-wrap flex-div">
-                                <label>Մակերես</label>
-                                <div class="values" style="display: flex;justify-content: flex-start;">
-                                    <div><span><?= Yii::t('app', 'From') ?></span>
-                                        <input type="text" name="size-from" class="sliderValue"
-                                               data-index="0" value="<?= Yii::$app->request->getQueryParam('size-from', 0) ?>"></div>
-                                    <div style="margin-left: 15px;"><span><?= Yii::t('app', 'To') ?></span>
-                                        <input type="text" name="size-to" class="sliderValue"
-                                               data-index="1" value="<?= Yii::$app->request->getQueryParam('size-to', 0) ?>"></div>
-                                </div>
-<!--                            </div>-->
-<!--                        </div>-->
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-7">
-                    <!--                    <div class="row">-->
-                    <!--                        <div class="col-lg-9">-->
                     <div class="slider-wrap flex-div">
                         <label><?= Yii::t('app', 'Price') ?></label>
                         <div id="slider-price"></div>
@@ -334,37 +282,12 @@ $attribute = new Attribute();
                                 <input type="text" name="price-to" class="sliderValue" data-index="1" value="<?= Yii::$app->request->getQueryParam('price-to', 0) ?>">
                             </div>
                         </div>
-                        <!--                            </div>-->
-                        <!--                        </div>-->
                     </div>
                 </div>
             </div>
             <div class="row mt15">
-                <div class="col-lg-3 col-sm-3">
-				<label>Բրոկեր</label>
-				<?php
-					$brokerSelect = [];
-					foreach ($brockers as $broker) {
-						$brokerSelect[$broker['id']] = $broker['user_number'];
-					}
-				?>
-				<?=
-                    $form->field($product, 'broker_id', ['template' => $template])->widget(Select2::className(), [
-                        'data' => $brokerSelect,
-                        'language' => Yii::$app->language,
-                        'options' => ['placeholder' => Yii::t('app', 'Select Broker'), 'value' => Yii::$app->request->getQueryParam('Product', []) && Yii::$app->request->getQueryParam('Product', [])['broker_id'] ? Yii::$app->request->getQueryParam('Product', [])['broker_id'] : ''],
-                        'pluginOptions' => [
-                            'allowClear' => true,
-							'closeOnSelect' => false,
-                            'multiple' => false,
-                        ],
-                        'pluginLoading' => false,
-                    ])->label(false);
-                    ?>
-                    
-                </div>
                 <div class="col-lg-2 col-sm-7">
-                    <label>Կոդ</label>
+                    <label><?=Yii::t('app', 'Codes')?></label>
                     <input type="text" id="broker_appartment_code" value="<?= Yii::$app->request->getQueryParam('product_sku', '') ?>"  class="form-control" placeholder="" name="product_sku"/>
                 </div>
 				
@@ -380,60 +303,15 @@ $attribute = new Attribute();
 					<p><?php echo $dataProvider->getTotalCount()?></p>
 				</div>
 
-                <?php
-//                $attrs = [];
-//
-//                foreach ($attributes[2]['childAttributes'] as $attr) {
-//                    $attrs[$attr['id']] = $attr['name'];
-//                }
-                ?>
-
-<!--                <div class="col-lg-3 col-sm-7">-->
-<!--                    <label>Սենյակներ</label>-->
-<!--                    --><?//=
-//                    $form->field($attribute, 'path', ['template' => $template])->widget(Select2::className(), [
-//                        'data' => $attrs,
-//                        'language' => Yii::$app->language,
-//                        'options' => ['placeholder' => Yii::t('app', 'Select options'), 'value' => Yii::$app->request->getQueryParam('Attribute', []) && Yii::$app->request->getQueryParam('Attribute', [])['path'] ? Yii::$app->request->getQueryParam('Attribute', [])['path'] : ''],
-//                        'pluginOptions' => [
-//                            'allowClear' => true,
-//                            'multiple' => true,
-//                        ],
-//                        'pluginLoading' => false,
-//                    ])->label(false);
-//                    ?>
-<!--                </div>-->
-                <div class="col-lg-4 col-sm-7" style="display: none" id="search-land-size-container">
-                    <div class="row">
-                        <div class="col-lg-11">
-                            <div class="slider-wrap">
-                                <label>Հողի մակերես</label>
-                                <div id="slider-price"></div>
-                                <div class="values">
-                                    <div>
-                                        <span><?= Yii::t('app', 'From') ?></span>
-                                        <input type="text" name="land-size-from" class="sliderValue"
-                                               data-index="0" value="<?= Yii::$app->request->getQueryParam('land-size-from', 0) ?>">
-                                    </div>
-                                    <div>
-                                        <span><?= Yii::t('app', 'To') ?></span>
-                                        <input type="text" name="land-size-to" class="sliderValue" data-index="1" value="<?= Yii::$app->request->getQueryParam('land-size-to', 0) ?>">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="row mt15">
                 <div class="col-lg-3 col-sm-4">
-                    <button class="btn btn-info"><?= Yii::t('app', 'Որոնել') ?></button>
-                    <a href="/product/index" class="btn btn-success"><?= Yii::t('app', 'Վերականգնել') ?></a>
+                    <button class="btn btn-info"><?= Yii::t('app', 'Search') ?></button>
+                    <a href="/product/index" class="btn btn-success"><?= Yii::t('app', 'Reset') ?></a>
                 </div>
             </div>
 
             <?php ActiveForm::end(); ?>
-<!--        </form>-->
     </div>
 </div>
 <?php
@@ -443,91 +321,7 @@ if(isset(Yii::$app->request->getQueryParam('ProductAddress', [])['city'])
 	$city_id = ProductAddress::getCityByAddressId(Yii::$app->request->getQueryParam('ProductAddress', [])['address']);
 }
 ?>
-<div id="fix-new-product-modal" class="modal" style="overflow: initial;z-index:10000;margin-top: 100px;">
-    <div>
-        <div class="">
-            <label><?= Yii::t('app', 'City') ?></label>
-            <?=
-            $form->field($productAddress, 'city', ['template' => $template])->widget(Select2::className(), [
-//                        'data' => $productAddress->getCities(),
-                'data' => $productAddress->getCities(),
-                'name' => 'fix-new-product-city',
-                'language' => Yii::$app->language,
-                'options' => ['placeholder' => Yii::t('app', 'Select City'), 'id' => 'fix-new-product-city', 'name' => '', 'onchange'=>'searchFillAddress(this, true)', 'value' => Yii::$app->request->getQueryParam('ProductAddress', []) && Yii::$app->request->getQueryParam('ProductAddress', [])['city'] ? Yii::$app->request->getQueryParam('ProductAddress', '')['city'] : $city_id],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                    'multiple' => false,
-                ],
-                'pluginLoading' => false,
-            ])->label(false)
-            ?>
-        </div>
-        <div class="">
-            <label><?= Yii::t('app', 'Road') ?></label>
-            <?=
-            $form->field($productAddress, 'address', ['template' => $template])->widget(Select2::className(), [
-                'data' => $productAddress->getAddresses(),
-                'name' => 'fix-new-product-road',
-                'language' => Yii::$app->language,
-                'options' => ['placeholder' => '', 'id' => 'fix-new-product-road', 'value' => Yii::$app->request->getQueryParam('ProductAddress', []) && Yii::$app->request->getQueryParam('ProductAddress', [])['address'] ? Yii::$app->request->getQueryParam('ProductAddress', '')['address'] : ''],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                    'multiple' => false,
-                ],
-                'pluginLoading' => false,
-            ])->label(false)
-            ?>
 
-        </div>
-
-        <div>
-            <label><?= Yii::t('app', 'Address Part 1') ?></label>
-            <input type="text" id="fix-new-product-building-number" class="form-control" value="<?= Yii::$app->request->getQueryParam('addr_1', '') ?>"  placeholder="" name="fix-new-product-building-number"/>
-        </div>
-        <div>
-            <label>ԲՆ. Համար</label>
-            <input type="text" id="fix-new-product-appartment-number" value="<?= Yii::$app->request->getQueryParam('addr_2', '') ?>"  class="form-control" placeholder="" name="fix-new-product-appartment-number"/>
-        </div>
-		<div>
-            <label>ԲՆ. Գին</label>
-            <input type="text" id="fix-new-product-appartment-price" value="<?= Yii::$app->request->getQueryParam('price-from', '') ?>"  class="form-control" placeholder="" name="fix-new-product-price"/>
-        </div>
-		<div>
-            <label>Սենյակներ</label>
-			<select name="fix-new-product-room" id="fix-new-product-appartment-room" class="form-control">
-					<option value="" selected>Ընտրեք Սենյակների Քանակը</option>
-					<option value="7">1 Սենյակ</option>
-					<option value="8">2 Սենյակ</option>
-					<option value="36">3 Սենյակ</option>
-					<option value="37">4 Սենյակ</option>
-					<option value="41">4+Սենյակ</option>
-			</select>
-        </div>
-		<div>
-            <label>Հարկ</label>
-            <input type="text" id="fix-new-product-appartment-level" class="form-control" placeholder="" name="fix-new-product-level"/>
-        </div>
-		<div>
-            <label>Վաճառողի Անունը</label>
-            <input type="text" id="buyer-name" class="form-control" value=""  placeholder="" name="buyer-name"/>
-        </div>
-        <div>
-            <label>Հեռախոսահամար</label>
-            <input type="text" id="fix-new-mobile" class="form-control" value=""  placeholder="" name="fix-new-mobile"/>
-        </div>
-        <div>
-            <label>Աղբյուր</label>
-            <input type="text" id="fix-new-source" class="form-control" value=""  placeholder="" name="fix-new-source"/>
-        </div>
-    </div>
-    <div style="color: red; margin-top: 15px; display: none; text-align: center; font-size: 18px;" id="fix-new-product-error">
-
-    </div>
-    <div style="margin-top: 15px;">
-        <button onclick="fixNewProductAdd();" class="btn btn-success">Պահպանել</button>
-        <a href="#" id="fix-new-product-modal-close" class="btn btn-danger" rel="modal:close">Փակել</a>
-    </div>
-</div>
 <div class="table-layout">
     <div class="tray tray-center">
         <!-- create new order panel -->
@@ -607,71 +401,6 @@ if(isset(Yii::$app->request->getQueryParam('ProductAddress', [])['city'])
                                     'placeholder' => 'Search'
                                 ],
                             ],
-                            ['attribute' => 'address',
-                                'format' => 'html',
-								'headerOptions' => ['style' => 'width:10%;'],
-                                'value' => function ($model) {
-									$appartmentNumber = "";
-									if(Yii::$app->request->getQueryParam('appartment-number-show')) {
-										$appartmentNumber = $model->addr_1;
-									} 
-									
-									    return $model->city . ' ' . $model->address.' '. $appartmentNumber;
-                                },
-                                'filterInputOptions' => [
-                                    'class' => 'form-control',
-                                    'placeholder' => 'Search'
-                                ],
-                            ],
-                            // 4 - hark, 38 - harkayunutyun, 3 - makeres, 2 - senyakner, 1 - tip, 14 - vichak,
-                            [
-                                'label' => 'Սենյակներ',
-								'headerOptions' => ['style' => 'width: 3%;'],
-                                'value' => function($model) {
-                                    $return = '';
-                                    if($model->json_attr && json_decode($model->json_attr)) {
-                                        $json = json_decode($model->json_attr, true);
-                                        $return = isset($json[2]) ? $json[2]: '';
-                                    }
-                                    return $return;
-                                },
-                            ],
-                            [
-                                'label' => 'Հարկ',
-								'headerOptions' => ['style' => 'width: 3%;'],
-                                'value' => function($model) {
-                                    $return = '';
-                                    if($model->json_attr && json_decode($model->json_attr)) {
-                                        $json = json_decode($model->json_attr, true);
-                                        $return = isset($json[38]) && isset($json[4]) ? $json[38].'/'.$json[4] : '';
-                                    }
-                                    return $return;
-                                },
-                            ],
-                            [
-                                'label' => 'Մակերես',
-								'headerOptions' => ['style' => 'width: 3%;'],
-                                'value' => function($model) {
-                                    $return = '';
-                                    if($model->json_attr && json_decode($model->json_attr)) {
-                                        $json = json_decode($model->json_attr, true);
-                                        $return = isset($json[3]) ? $json[3] : '';
-                                    }
-                                    return $return;
-                                },
-                            ],
-                            [
-                                'label' => 'Տիպ',
-								'headerOptions' => ['style' => 'width: 5%;'],
-                                'value' => function($model) {
-                                    $return = '';
-                                    if($model->json_attr && json_decode($model->json_attr)) {
-                                        $json = json_decode($model->json_attr, true);
-                                        $return = isset($json[1]) ? $json[1] : '';
-                                    }
-                                    return $return;
-                                },
-                            ],
                             [
                                 'label' => 'Վիճակ',
 								'headerOptions' => ['style' => 'width: 5%;'],
@@ -684,43 +413,11 @@ if(isset(Yii::$app->request->getQueryParam('ProductAddress', [])['city'])
                                     return $return;
                                 },
                             ],
-							[
-                                'label' => 'Տեսակը',
-								'headerOptions' => ['style' => 'width: 5%;'],
-                                'value' => function($model) {
-                                    $return = '';
-                                    if($model->sub_category) {
-                                        $return = "Վարձակալություն";
-                                    } else {
-										$return = "Վաճառք";
-									}
-                                    return $return;
-                                },
-                            ],
                             [
                                 'attribute' => 'price',
 								'headerOptions' => ['style' => 'width: 5%;'],
                                 'value' => function($model) {
                                     return $model->price.'$';
-                                },
-                            ],
-                            [
-                                'label' => 'Բրոկեր',
-								'headerOptions' => ['style' => 'width: 5%;'],
-                                'attribute' => 'broker_id',
-                                'value' => function($model) use (&$brockers) {
-                                    if($model->broker_id) {
-                                        $broker_number = '';
-                                        foreach ($brockers as $k => $v) {
-                                            if($model->broker_id == $v['id']) {
-                                                $broker_number = $v['user_number'];
-                                            }
-                                        }
-
-                                        return $broker_number;
-                                    } else {
-                                        return '';
-                                    }
                                 },
                             ],
                             ['attribute' => 'category',
