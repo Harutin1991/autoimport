@@ -49,8 +49,8 @@ $socialIcon = SocialNet::find()->where(['active' => 1])->asArray()->all();
 		<meta name="robots" content="noindex">
 		<meta name="theme-color" content="#1086c3">
 		<meta name="description" content="">
-		<meta name="keywords" content="Arias">
-		<meta name="author" content="Bafront">
+		<meta name="keywords" content="Autoimport">
+		<meta name="author" content="harut.soghomonyan@gmail.com">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <?= Html::csrfMetaTags() ?>
@@ -58,8 +58,8 @@ $socialIcon = SocialNet::find()->where(['active' => 1])->asArray()->all();
             <?= Html::encode($this->title) ?>
         </title>
 		<link rel="icon" href="/img/core-img/favicon.ico">
-        <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900"
-              rel="stylesheet">
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
               <?php $this->head() ?>
     </head>
     <body>
@@ -105,71 +105,90 @@ $socialIcon = SocialNet::find()->where(['active' => 1])->asArray()->all();
             ]);
         }
         ?>
-    <body class="home">
-        <div id="preloader">
-            <div class="south-load"></div>
-        </div>
-        <header class="header-area">
-		 <div class="top-header-area">
-            <div class="h-100 d-md-flex justify-content-between align-items-center">
-                <div class="email-address">
-                    <a href="mailto:info@bafront.com" class="hidden"><?=$settings['site_email']?></a>
-                    <ul class="social">
-                        <li><a href=""><i class="fa fa-facebook"></i> </a></li>
-                        <li><a href=""><i class="fa fa-instagram"></i></a></li>
-                        <li><a href=""><i class="fa fa-youtube"></i></a></li>
-                        <li><a href=""><i class="fa fa-linkedin"></i> </a></li>
-                    </ul>
-                </div>
-                <div class="phone-number d-flex">
-                    <div class="icon">
-                        <img src="/img/icons/phone-call.png" alt="">
-                    </div>
-                    <div class="number">
-                        <a href="tel:<?=$phone[0]?>"><?=$phone[0]?></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-		
-		<div class="main-header-area" id="stickyHeader">
-            <div class="classy-nav-container breakpoint-off">
-                <nav class="classy-navbar justify-content-between" id="southNav">
+        <body class="front" data-spy="scroll" data-target="#top1" data-offset="96">
 
-                    <a class="nav-brand" href="index.html"><img src="/img/core-img/logo.png" alt=""></a>
+        <div id="main">
 
-                    <div class="classy-navbar-toggler">
-                        <span class="navbarToggler"><span></span><span></span><span></span></span>
-                    </div>
+            <div class="top0">
+                <div class="container">
 
-                    <div class="classy-menu">
-
-                        <div class="classycloseIcon">
-                            <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                    <div class="block-left">
+                        <div class="address1"><span aria-hidden="true" class="ei icon_pin"></span><?=$settings['address']?></div>
+                        <div class="phone1"><span aria-hidden="true" class="ei icon_phone"></span><?=$phone[0]?></div>
+                        <div class="social_wrapper">
+                            <ul class="social clearfix">
+                                <?php foreach ($socialIcon as $social): ?>
+                                <li><a href="<?=$social['link']?>"><i class="fa fa-<?=$social['social_type']?>"></i></a></li>
+                                <?php endforeach; ?>
+                            </ul>
                         </div>
-						
-						<div class="classynav ">
-                                <ul>
-                                    <li <?php if ($currentUrl == ''): ?> class="active" <?php endif ?>><a href="/<?= Yii::$app->language ?>/" <?php if ($currentUrl == ''): ?> class="active" <?php endif ?>>Գլխավոր</a></li>
-									<li  <?php if (!strcmp($currentUrl, '/product/index')): ?> class="active" <?php endif ?>><a href="/<?= Yii::$app->language ?>/product/index" <?php if (!strcmp($currentUrl, '/product/index')): ?> class="active" <?php endif ?>>Որոնել Գույք</a></li>
-                                    <li <?php if (!strcmp($currentUrl, '/about-us')): ?> class="active" <?php endif ?>><a href="/<?= Yii::$app->language ?>/about-us" <?php if (!strcmp($currentUrl, '/about-us')): ?> class="active" <?php endif ?> >Մեր մասին</a></li>
-                                    <li <?php if (!strcmp($currentUrl, '/contact')): ?> class="active" <?php endif ?>><a href="/<?= Yii::$app->language ?>/contact" <?php if (!strcmp($currentUrl, '/contact')): ?> class="active" <?php endif ?>>Կապ</a></li>
-                                    <li <?php if (!strcmp($currentUrl, '/news')): ?> class="active" <?php endif ?>><a href="/<?= Yii::$app->language ?>/news" <?php if (!strcmp($currentUrl, '/news')): ?> class="active" <?php endif ?>>Նորություններ</a></li>
-                                </ul>
-                                <div class="south-search-form">
-									<form action="#" method="post">
-										<input type="search" name="search" id="search" placeholder="Փնտրել ...">
-										<button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-									</form>
-								</div>
-
-								<a href="#" class="searchbtn"><i class="fa" aria-hidden="true"></i></a>
-                            </div>
                     </div>
-                </nav>
+                    <div class="block-right">
+                        <div class="signin1"><a href="#"><?= Yii::t('app','SIGN IN');?></a></div>
+                        <div class="register1"><a href="#"><?= Yii::t('app','REGISTER');?></a></div>
+                        <div class="lang1">
+                            <div class="dropdown">
+                                <?php foreach ($languages as $language): ?>
+                                    <?php if (Yii::$app->language == $language['short_code']): ?>
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><?php echo $language['name']; ?><span class="caret"></span>
+                                        </button>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <?php foreach ($languages as $language): ?>
+                                        <?php if (Yii::$app->language == $language['short_code']): ?>
+                                            <li><a class="<?php echo $language['short_code']; ?>" href="#"><?php echo $language['name']; ?></a></li>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
-	</header>
+
+            <div id="top1">
+                <div class="top2_wrapper" id="top2">
+                    <div class="container">
+
+                        <div class="top2 clearfix">
+
+                            <header>
+                                <div class="logo_wrapper">
+                                    <a href="/<?= Yii::$app->language ?>/" class="logo scroll-to">
+                                        <img src="/img/autoimport.jpg" alt="" class="img-responsive">
+                                    </a>
+                                </div>
+                            </header>
+
+                            <div class="navbar navbar_ navbar-default">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <div class="navbar-collapse navbar-collapse_ collapse">
+                                    <ul class="nav navbar-nav sf-menu clearfix">
+
+                                        <li <?php if ($currentUrl == ''): ?> class="active" <?php endif ?>><a href="/<?= Yii::$app->language ?>/" <?php if ($currentUrl == ''): ?> class="active" <?php endif ?>><?= Yii::t('app','Home');?></a></li>
+                                        <li  <?php if (!strcmp($currentUrl, '/product/index')): ?> class="active" <?php endif ?>><a href="/<?= Yii::$app->language ?>/product/index" <?php if (!strcmp($currentUrl, '/product/index')): ?> class="active" <?php endif ?>><?= Yii::t('app','Cars');?></a></li>
+                                        <li><a href="#best" ><?= Yii::t('app','Best offers');?></a></li>
+                                        <li><a href="#welcome"><?= Yii::t('app','About Us');?></a></li>
+                                        <li <?php if (!strcmp($currentUrl, '/contact')): ?> class="active" <?php endif ?>><a href="/<?= Yii::$app->language ?>/contact" <?php if (!strcmp($currentUrl, '/contact')): ?> class="active" <?php endif ?>><?= Yii::t('app','Contact Us');?></a></li>
+                                        <li <?php if (!strcmp($currentUrl, '/news')): ?> class="active" <?php endif ?>><a href="/<?= Yii::$app->language ?>/news" <?php if (!strcmp($currentUrl, '/news')): ?> class="active" <?php endif ?>><?= Yii::t('app','News');?></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
 
         <?php echo $content ?>
         <footer class="footer-area section-padding-100-0 bg-img gradient-background-overlay" style="background-image: url(/img/bg-img/cta.jpg);">
