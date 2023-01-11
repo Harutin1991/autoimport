@@ -47,19 +47,19 @@ if(!empty($attributes)) {
                 <div class="col1">
                     <div class="select1_wrapper">
                         <div class="select1_inner">
-<!--                            --><?php //=
-//                            $form->field($product, 'category_id', ['template' => $template])->widget(Select2::className(), [
-//                                'data' => $product->getAllCategories(),
-//                                'language' => Yii::$app->language,
-//                                'options' => ['placeholder' => Yii::t('app', 'Select Category'),
-//                                    'value' => Yii::$app->request->getQueryParam('Product', []) && isset(Yii::$app->request->getQueryParam('Product', [])['category_id']) ? Yii::$app->request->getQueryParam('Product')['category_id'] : ''],
-//                                'pluginOptions' => [
-//                                    'allowClear' => true,
-//                                    'multiple' => false,
-//                                ],
-//                                'pluginLoading' => false,
-//                            ])->label(Yii::t('app', 'Category'))
-//                            ?>
+                            <?=
+                            $form->field($product, 'category_id', ['template' => $template])->widget(Select2::className(), [
+                                'data' => $product->getAllCategories(),
+                                'language' => Yii::$app->language,
+                                'options' => ['placeholder' => Yii::t('app', 'Select Category'),
+                                    'value' => Yii::$app->request->getQueryParam('Product', []) && isset(Yii::$app->request->getQueryParam('Product', [])['category_id']) ? Yii::$app->request->getQueryParam('Product')['category_id'] : ''],
+                                'pluginOptions' => [
+                                    'allowClear' => true,
+                                    'multiple' => false,
+                                ],
+                                'pluginLoading' => false,
+                            ])->label(Yii::t('app', 'Category'))
+                            ?>
                         </div>
                         <a href="#" class="more">MISSING MANUFACTURER?</a>
                     </div>

@@ -202,6 +202,8 @@ if (isset($error) && $error) {
 
     <?php echo $content ?>
 
+    <?= $this->render('footer', []); ?>
+
 
     <?php $this->endBody() ?>
 </body>
