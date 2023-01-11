@@ -33,12 +33,7 @@ foreach ($parentAttributes as $v) {
 
 	$attributes[$v['id']] = ['id' => $v['id'], 'name' => $v['name'], 'childAttributes' => $childAttr];
 }
-$attrs = [];
-if(!empty($attributes)) {
-    foreach ($attributes[2]['childAttributes'] as $attr) {
-        $attrs[$attr['id']] = $attr['name'];
-    }
-}
+
 ?>
 <div class="booking-wrapper">
     <div class="booking">
