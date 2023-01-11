@@ -281,90 +281,7 @@ $attribute = new Attribute();
 
                 </div>
             </div>
-            <?php if(!empty($attributes)):?>
-            <div class="row">
-                <div style="width: 12%;" class="col-lg-1 col-sm-1 mobile-100">
-                    <label><?= Yii::t('app', 'Address Part 1') ?></label>
-                    <input type="text" id="broker_buliding_number" class="form-control" value="<?= Yii::$app->request->getQueryParam('addr_1', '') ?>"  placeholder="" name="addr_1"/>
-                </div>
-                <div style="width: 12%;" class="col-lg-1 col-sm-1 mobile-100">
-                    <label>ԲՆ. Համար</label>
-                    <input type="text" id="broker_appartment_number" value="<?= Yii::$app->request->getQueryParam('addr_2', '') ?>"  class="form-control" placeholder="" name="addr_2"/>
-                </div>
-
-                <?php
-                $attrs = [];
-
-                foreach ($attributes[2]['childAttributes'] as $attr) {
-                    $attrs[$attr['id']] = $attr['name'];
-                }
-                ?>
-                <div class="col-lg-3 col-sm-7">
-                    <label>Սենյակներ</label>
-                    <?=
-                    $form->field($attribute, 'path', ['template' => $template])->widget(Select2::className(), [
-                        'data' => $attrs,
-                        'language' => Yii::$app->language,
-                        'options' => ['placeholder' => Yii::t('app', 'Select options'), 'value' => Yii::$app->request->getQueryParam('Attribute', []) && Yii::$app->request->getQueryParam('Attribute', [])['path'] ? Yii::$app->request->getQueryParam('Attribute', [])['path'] : ''],
-                        'pluginOptions' => [
-                            'allowClear' => true,
-                            'closeOnSelect' => false,
-                            'multiple' => true,
-                        ],
-                        'pluginLoading' => false,
-                    ])->label(false);
-                    ?>
-                </div>
-                <?php
-                $attrs = [];
-
-                foreach ($attributes[14]['childAttributes'] as $attr) {
-                    $attrs[$attr['id']] = $attr['name'];
-                }
-                ?>
-                <div class="col-lg-3 col-sm-7">
-                    <label><?=$attributes[14]['name']?></label>
-                    <?=
-                    $form->field($attribute, 'name', ['template' => $template])->widget(Select2::className(), [
-                        'data' => $attrs,
-                        'language' => Yii::$app->language,
-                        'options' => ['placeholder' => Yii::t('app', 'Select options'), 'value' => Yii::$app->request->getQueryParam('Attribute', []) && Yii::$app->request->getQueryParam('Attribute', [])['name'] ? Yii::$app->request->getQueryParam('Attribute', [])['name'] : ''],
-                        'pluginOptions' => [
-                            'allowClear' => true,
-							'closeOnSelect' => false,
-                            'multiple' => true,
-                        ],
-                        'pluginLoading' => false,
-                    ])->label(false);
-                    ?>
-
-                </div>
-                <div class="col-lg-3 col-sm-7">
-                    <label><?= $attributes[1]['name'] ?></label>
-
-                    <?php
-                    $attrs = [];
-
-                    foreach ($attributes[1]['childAttributes'] as $attr) {
-                        $attrs[$attr['id']] = $attr['name'];
-                    }
-                    ?>
-                    <?=
-                    $form->field($attribute, 'category_id', ['template' => $template])->widget(Select2::className(), [
-                        'data' => $attrs,
-                        'language' => Yii::$app->language,
-                        'options' => ['placeholder' => Yii::t('app', 'Select options'), 'value' => Yii::$app->request->getQueryParam('Attribute', []) && Yii::$app->request->getQueryParam('Attribute', [])['category_id'] ? Yii::$app->request->getQueryParam('Attribute', [])['category_id'] : ''],
-                        'pluginOptions' => [
-                            'allowClear' => true,
-							'closeOnSelect' => false,
-                            'multiple' => true,
-                        ],
-                        'pluginLoading' => false,
-                    ])->label(false);
-                    ?>
-                </div>
-            </div>
-<?php endif;?>
+            
             <div class="row mt15">
                 <div class="col-lg-4 col-sm-7">
                     <!--                    <div class="row">-->
@@ -878,4 +795,3 @@ $this->registerJs("
 ");
 
 ?>
-
