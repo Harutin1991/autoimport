@@ -235,51 +235,12 @@ if(!empty($attributes)) {
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-4 col-lg-2">
-                                    <div class="form-group">
-									<label>Սենյակներ</label>
-                                         <?=
-											$form->field($attribute, 'path', ['template' => $template])->widget(Select2::className(), [
-												'data' => $attrs,
-												'language' => Yii::$app->language,
-												'options' => ['placeholder' => Yii::t('app', 'Select options'), 'value' => Yii::$app->request->getQueryParam('Attribute', []) && Yii::$app->request->getQueryParam('Attribute', [])['path'] ? Yii::$app->request->getQueryParam('Attribute', [])['path'] : ''],
-												'pluginOptions' => [
-													'allowClear' => true,
-													'closeOnSelect' => false,
-													'multiple' => true,
-												],
-												'pluginLoading' => false,
-											])->label(false);
-											?>
-                                    </div>
-                                </div>
 
-                                <div class="col-12 col-md-4 col-lg-2">
-                                    <div class="form-group">
-                                        <label for="etage">Հարկ</label>
-										<div class="values" style="display: flex;justify-content: flex-start;">
-											<div><span><?= Yii::t('app', 'From') ?></span>
-												<input type="text" name="floor-from" class="sliderValue form-control"
-													   data-index="0" value="<?= Yii::$app->request->getQueryParam('floor-from', 0) ?>"></div>
-											<div style="margin-left: 15px;"><span><?= Yii::t('app', 'To') ?></span>
-												<input type="text" name="floor-to" class="sliderValue form-control"
-													   data-index="1" value="<?= Yii::$app->request->getQueryParam('floor-to', 0) ?>"></div>
-										</div>
-                                    </div>
-                                </div>
+
+
 
                                 <div class="col-12 col-md-8 col-lg-12 col-xl-5 d-flex">
-                                    <div class="slider-range">
-                                        <label>Մակերես</label>
-										<div class="values" style="display: flex;justify-content: flex-start;">
-											<div><span><?= Yii::t('app', 'From') ?></span>
-												<input type="text" name="size-from" class="sliderValue form-control"
-													   data-index="0" value="<?= Yii::$app->request->getQueryParam('size-from', 0) ?>"></div>
-											<div style="margin-left: 15px;"><span><?= Yii::t('app', 'To') ?></span>
-												<input type="text" name="size-to" class="sliderValue form-control"
-													   data-index="1" value="<?= Yii::$app->request->getQueryParam('size-to', 0) ?>"></div>
-										</div>
-                                    </div>
+
 
                                     <div class="slider-range">
                                         <label><?= Yii::t('app', 'Price') ?></label>
@@ -298,32 +259,11 @@ if(!empty($attributes)) {
                                     </div>
                                 </div>
 								
-								<div class="col-12 col-md-8 col-lg-12 col-xl-5 d-flex">
-                                    <div class="slider-range">
-                                        <label for="">Մակերես</label>
-                                        <div data-min="35" data-max="820" data-unit=" Քմ․" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="120" data-value-max="820">
-                                            <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
-                                            <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                                            <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                                        </div>
-                                        <div class="range">35 Քմ.  - 820 Քմ.</div>
-                                    </div>
 
-                                    <div class="slider-range">
-                                        <label for="">Գին</label>
-                                        <div data-min="0" data-max="1300" data-unit=" դրամ" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="10" data-value-max="1300">
-                                            <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
-                                            <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                                            <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                                        </div>
-                                        
-                                        <div class="range">0 դրամ - 1300 դրամ</div>
-                                    </div>
-                                </div>
 								
 								<div class="col-12 col-md-4 col-lg-4">
 									<div class="form-group">
-										<label for="code">Կոդ</label>
+										<label for="code">Code</label>
 										<input type="text" id="broker_appartment_code" value="<?= Yii::$app->request->getQueryParam('product_sku', '') ?>"  class="form-control" placeholder="" name="product_sku"/>
 									</div>
 								</div>
