@@ -931,9 +931,9 @@ $this->title = Yii::t('app', 'ARIAS') . ' | ' . Yii::t('app', 'Home');
 	  <?php endforeach; ?>
     </div>
 
-    <?= $this->render('/site/category') ?>
+    <?php  //$this->render('/site/category') ?>
 </section>
-<?php $this->render('/site/filters') ?>
+<?php //$this->render('/site/filters') ?>
 	
 	<section class="featured-properties-area section-padding-100-50">
         <div class="container">
