@@ -26,12 +26,14 @@ use backend\models\Aboutus;
 /**
  * Site controller
  */
-class SiteController extends Controller {
+class SiteController extends Controller
+{
 
     /**
      * @inheritdoc
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -45,7 +47,8 @@ class SiteController extends Controller {
     /**
      * @inheritdoc
      */
-    public function actions() {
+    public function actions()
+    {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -66,7 +69,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         if (!Yii::$app->session->has('language') && Yii::$app->language != "am") {
             Yii::$app->session->set('language', 'am');
             header('Location: ' . Yii::$app->params['baseUrlHome'] . 'am');
@@ -76,15 +80,17 @@ class SiteController extends Controller {
         }
 
         return $this->render('index', [
-                    //'products' => $products,
+            //'products' => $products,
         ]);
     }
-	
-	public function actionComming() {
-		return $this->renderPartial('contact-us');
-	}
 
-    public function actionBrands() {
+    public function actionComing()
+    {
+        return $this->renderPartial('contact-us');
+    }
+
+    public function actionBrands()
+    {
         $filter = [];
         $letters = Yii::$app->request->get('letter');
         if ($letters) {
@@ -96,11 +102,12 @@ class SiteController extends Controller {
             $brands[$key]['products'] = Brand::getProductCountByBrand($br['id']);
         }
         return $this->render('brands', [
-                    'brands' => $brands
+            'brands' => $brands
         ]);
     }
 
-    public function actionChangeCurrency($currency) {
+    public function actionChangeCurrency($currency)
+    {
         $currency = Currency::find()->where(['id' => $currency])->one();
         $session = Yii::$app->session;
         if (!empty($currency)) {
@@ -113,7 +120,8 @@ class SiteController extends Controller {
         return $this->redirect(Yii::$app->request->referrer);
     }
 
-    public function createTree(&$list, $parent) {
+    public function createTree(&$list, $parent)
+    {
         $tree = array();
         foreach ($parent as $k => $l) {
             if (isset($list[$l['id']])) {
@@ -129,7 +137,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionLogin($authkey = null) {
+    public function actionLogin($authkey = null)
+    {
         if (!Yii::$app->user->isGuest) {
             return $this->goBack();
         }
@@ -165,13 +174,14 @@ class SiteController extends Controller {
             }
         } else {
             return $this->render('login', [
-                        'model' => $model,
-                        'modelSignup' => $modelSignup,
+                'model' => $model,
+                'modelSignup' => $modelSignup,
             ]);
         }
     }
 
-    public function actionZapolnitEmail() {
+    public function actionZapolnitEmail()
+    {
         if (Yii::$app->request->post()) {
             $user = User::findOne(Yii::$app->user->identity->id);
             if ($user->email != '') {
@@ -189,7 +199,8 @@ class SiteController extends Controller {
         return $this->render('fill-email', ['model' => $model]);
     }
 
-    public function actionLoginUser() {
+    public function actionLoginUser()
+    {
         if (Yii::$app->request->isAjax) {
             $userInfo = Yii::$app->request->post('user_info');
             $userData = [];
@@ -272,7 +283,8 @@ class SiteController extends Controller {
         }
     }
 
-    public function sendEmail($to, $subject, $data) {
+    public function sendEmail($to, $subject, $data)
+    {
         $username = ucfirst($data['email']);
         $password = $data['password'];
         $name = preg_replace("/[0-9]+/", '', $username);
@@ -281,15 +293,16 @@ class SiteController extends Controller {
              password is $password<br/>
          You was added as Customer in our site. You'll love it!";
         return Yii::$app
-                        ->mailer
-                        ->compose('email-layout', ['content' => $message])
-                        ->setFrom(['admin-odenson@test.com' => Yii::$app->name])
-                        ->setTo($to)
-                        ->setSubject($subject)
-                        ->send();
+            ->mailer
+            ->compose('email-layout', ['content' => $message])
+            ->setFrom(['admin-odenson@test.com' => Yii::$app->name])
+            ->setTo($to)
+            ->setSubject($subject)
+            ->send();
     }
 
-    public function actionCart() {
+    public function actionCart()
+    {
         return $this->render('/cart/list');
     }
 
@@ -298,7 +311,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionLogout() {
+    public function actionLogout()
+    {
         Yii::$app->user->logout();
 
         return $this->goHome();
@@ -309,7 +323,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionContact() {
+    public function actionContact()
+    {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail('')) {
@@ -321,7 +336,7 @@ class SiteController extends Controller {
             return $this->refresh();
         } else {
             return $this->render('contact', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -331,25 +346,30 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionPage($tag) {
+    public function actionPage($tag)
+    {
         $page = Pages::find()->where(['route_name' => $tag])->one();
         return $this->render('page', ['page' => $page]);
     }
-	
-	public function actionAboutUs() {
-		$page = Aboutus::findOne(1);
+
+    public function actionAboutUs()
+    {
+        $page = Aboutus::findOne(1);
         return $this->render('about-us', ['page' => $page]);
-	}
-	
-	public function actionNews() {
+    }
+
+    public function actionNews()
+    {
         return $this->render('news');
-	}
+    }
+
     /**
      * Displays faq page.
      *
      * @return mixed
      */
-    public function actionFaq() {
+    public function actionFaq()
+    {
         return $this->render('/faq/faq');
     }
 
@@ -358,14 +378,14 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionSignup() {
+    public function actionSignup()
+    {
         $model = new SignupForm();
         if (Yii::$app->request->post()) {
             $verifyToken = Yii::$app->request->post('verifyToken');
             $customer = Customer::findByPasswordResetToken($verifyToken);
             $model->load(Yii::$app->request->post());
-            $model->username = $model->name . time();
-            ;
+            $model->username = $model->name . time();;
             if ($customer) {
                 $customer->auth_token = "";
                 if ($customer->save()) {
@@ -386,8 +406,8 @@ class SiteController extends Controller {
         }
         $modelLogin = new LoginForm();
         return $this->render('login', [
-                    'model' => $modelLogin,
-                    'modelSignup' => $model,
+            'model' => $modelLogin,
+            'modelSignup' => $model,
         ]);
     }
 
@@ -396,7 +416,8 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionRequestPasswordReset() {
+    public function actionRequestPasswordReset()
+    {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
@@ -409,7 +430,7 @@ class SiteController extends Controller {
         }
 
         return $this->render('requestPasswordResetToken', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -420,7 +441,8 @@ class SiteController extends Controller {
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token) {
+    public function actionResetPassword($token)
+    {
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {
@@ -434,7 +456,7 @@ class SiteController extends Controller {
         }
 
         return $this->render('resetPassword', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 

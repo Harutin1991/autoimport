@@ -34,11 +34,131 @@ foreach ($parentAttributes as $v) {
 	$attributes[$v['id']] = ['id' => $v['id'], 'name' => $v['name'], 'childAttributes' => $childAttr];
 }
 $attrs = [];
-
-foreach ($attributes[2]['childAttributes'] as $attr) {
-	$attrs[$attr['id']] = $attr['name'];
+if(!empty($attributes)) {
+    foreach ($attributes[2]['childAttributes'] as $attr) {
+        $attrs[$attr['id']] = $attr['name'];
+    }
 }
 ?>
+<div class="booking-wrapper">
+    <div class="booking">
+        <?php $form = ActiveForm::begin(['method' => 'get','action' => '/'.Yii::$app->language.'/filter-product','class'=>"form1"]); ?>
+            <div class="row">
+                <div class="col1">
+                    <div class="select1_wrapper">
+                        <div class="select1_inner">
+                            <?=
+                            $form->field($product, 'category_id', ['template' => $template])->widget(Select2::className(), [
+                                'data' => $product->getAllCategories(),
+                                'language' => Yii::$app->language,
+                                'options' => ['placeholder' => Yii::t('app', 'Select Category'),
+                                    'value' => Yii::$app->request->getQueryParam('Product', []) && isset(Yii::$app->request->getQueryParam('Product', [])['category_id']) ? Yii::$app->request->getQueryParam('Product')['category_id'] : ''],
+                                'pluginOptions' => [
+                                    'allowClear' => true,
+                                    'multiple' => false,
+                                ],
+                                'pluginLoading' => false,
+                            ])->label(Yii::t('app', 'Category'))
+                            ?>
+                        </div>
+                        <a href="#" class="more">MISSING MANUFACTURER?</a>
+                    </div>
+                </div>
+                <div class="col1">
+                    <div class="select1_wrapper">
+                        <label>Model</label>
+                        <div class="select1_inner">
+                            <select class="select2 select" style="width: 100%">
+                                <option value="1">Any Model</option>
+                                <option value="2">Model 1</option>
+                                <option value="3">Model 2</option>
+                                <option value="4">Model 3</option>
+                                <option value="5">Model 4</option>
+                                <option value="6">Model 5</option>
+                                <option value="7">Model 6</option>
+                            </select>
+                        </div>
+                        <a href="#" class="more">MISSING MODEL?</a>
+                    </div>
+                </div>
+                <div class="col1">
+                    <div class="select1_wrapper">
+                        <label>Status</label>
+                        <div class="select1_inner">
+                            <select class="select2 select" style="width: 100%">
+                                <option value="1">Vehicle Status</option>
+                                <option value="2">Status 1</option>
+                                <option value="3">Status 2</option>
+                                <option value="4">Status 3</option>
+                                <option value="5">Status 4</option>
+                                <option value="6">Status 5</option>
+                                <option value="7">Status 6</option>
+                            </select>
+                        </div>
+                        <a href="#" class="more">E.G: NEW, USED, CERTIFIED</a>
+                    </div>
+                </div>
+                <div class="col1">
+                    <div class="select1_wrapper">
+                        <label>Min Year</label>
+                        <div class="select1_inner">
+                            <select class="select2 select" style="width: 100%">
+                                <option value="1">Min Year</option>
+                                <option value="2">2018</option>
+                                <option value="3">2017</option>
+                                <option value="4">2016</option>
+                                <option value="5">2015</option>
+                                <option value="6">2014</option>
+                                <option value="7">2013</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col1">
+                    <div class="select1_wrapper">
+                        <label>Max Year</label>
+                        <div class="select1_inner">
+                            <select class="select2 select" style="width: 100%">
+                                <option value="1">Max Year</option>
+                                <option value="2">2018</option>
+                                <option value="3">2017</option>
+                                <option value="4">2016</option>
+                                <option value="5">2015</option>
+                                <option value="6">2014</option>
+                                <option value="7">2013</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col2">
+                    <div id="slider-range-wrapper">
+                        <div class="txt">PRICE RANGE</div>
+
+                        <div id="slider-range"></div>
+
+                        <div class="clearfix">
+                            <input type="text" id="amount" readonly>
+                            <input type="text" id="amount2" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="col3">
+                    <div class="adv-serach"><a href="#">ADVANCED SEARCH</a></div>
+                    <button type="submit" class="btn-default btn-form1-submit"><span>SEARCH THE VEHICLE</span>
+                    </button>
+                </div>
+            </div>
+        <?php ActiveForm::end(); ?>
+    </div>
+</div>
+
+
+
+
+
+
 <div class="south-search-area">
         <div class="container">
             <div class="row">
@@ -47,7 +167,7 @@ foreach ($attributes[2]['childAttributes'] as $attr) {
                         <div class="search-title">
                             <p>Փնտրեք ձեր տունը</p>
                         </div>
-						<?php $form = ActiveForm::begin(['method' => 'get','action' => '/'.Yii::$app->language.'/filter-product']); ?>
+
                             <div class="row">
 
                                 
@@ -55,18 +175,7 @@ foreach ($attributes[2]['childAttributes'] as $attr) {
                                 <div class="col-12 col-md-4 col-lg-3">
                                     <div class="form-group">
                                         <label for="cities">Ընտրեք կատեգորիան</label>
-										<?=
-										$form->field($product, 'category_id', ['template' => $template])->widget(Select2::className(), [
-											'data' => $product->getAllCategories(),
-											'language' => Yii::$app->language,
-											'options' => ['placeholder' => Yii::t('app', 'Select Category'),'value' => Yii::$app->request->getQueryParam('Product', []) && isset(Yii::$app->request->getQueryParam('Product', [])['category_id']) ? Yii::$app->request->getQueryParam('Product')['category_id'] : ''], //'onchange'=>'getProductAttr(this.value,"'.Yii::$app->language.'")'
-											'pluginOptions' => [
-												'allowClear' => true,
-												'multiple' => false,
-											],
-											'pluginLoading' => false,
-										])->label(false)
-										?>
+
                                     </div>
                                 </div>
 
@@ -231,7 +340,7 @@ foreach ($attributes[2]['childAttributes'] as $attr) {
                                     </div>
                                 </div>
                             </div>
-                       <?php ActiveForm::end(); ?>
+
                     </div>
                 </div>
             </div>
