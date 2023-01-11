@@ -1,0 +1,19 @@
+[20-Sep-2022 10:54:23 UTC] PHP Fatal error:  Cannot use 'Object' as class name as it is reserved in /home/gssamru/arias.am/vendor/yiisoft/yii2/base/Object.php on line 77
+[20-Sep-2022 11:01:55 UTC] PHP Fatal error:  Cannot use 'Object' as class name as it is reserved in /home/gssamru/arias.am/vendor/yiisoft/yii2/base/Object.php on line 77
+[20-Sep-2022 11:02:42 UTC] PHP Fatal error:  Cannot use 'Object' as class name as it is reserved in /home/gssamru/arias.am/vendor/yiisoft/yii2/base/Object.php on line 77
+[20-Sep-2022 11:09:00 UTC] PHP Fatal error:  Cannot use 'Object' as class name as it is reserved in /home/gssamru/arias.am/vendor/yiisoft/yii2/base/Object.php on line 77
+[20-Sep-2022 11:09:02 UTC] PHP Fatal error:  Cannot use 'Object' as class name as it is reserved in /home/gssamru/arias.am/vendor/yiisoft/yii2/base/Object.php on line 77
+[20-Sep-2022 11:09:03 UTC] PHP Fatal error:  Cannot use 'Object' as class name as it is reserved in /home/gssamru/arias.am/vendor/yiisoft/yii2/base/Object.php on line 77
+[20-Sep-2022 11:09:03 UTC] PHP Fatal error:  Cannot use 'Object' as class name as it is reserved in /home/gssamru/arias.am/vendor/yiisoft/yii2/base/Object.php on line 77
+[20-Sep-2022 11:09:03 UTC] PHP Fatal error:  Cannot use 'Object' as class name as it is reserved in /home/gssamru/arias.am/vendor/yiisoft/yii2/base/Object.php on line 77
+[20-Sep-2022 11:10:03 UTC] PHP Fatal error:  Cannot use 'Object' as class name as it is reserved in /home/gssamru/arias.am/vendor/yiisoft/yii2/base/Object.php on line 77
+[20-Sep-2022 11:11:20 UTC] PHP Fatal error:  Cannot use 'Object' as class name as it is reserved in /home/gssamru/arias.am/vendor/yiisoft/yii2/base/Object.php on line 77
+[20-Sep-2022 11:11:48 UTC] PHP Fatal error:  Cannot use 'Object' as class name as it is reserved in /home/gssamru/arias.am/vendor/yiisoft/yii2/base/Object.php on line 77
+[20-Sep-2022 11:11:49 UTC] PHP Fatal error:  Cannot use 'Object' as class name as it is reserved in /home/gssamru/arias.am/vendor/yiisoft/yii2/base/Object.php on line 77
+[20-Sep-2022 11:11:49 UTC] PHP Fatal error:  Cannot use 'Object' as class name as it is reserved in /home/gssamru/arias.am/vendor/yiisoft/yii2/base/Object.php on line 77
+[20-Sep-2022 11:18:03 UTC] PHP Warning:  require(/home/gssamru/arias.am/vendor/composer/../ezyang/htmlpurifier/library/HTMLPurifier.composer.php): failed to open stream: No such file or directory in /home/gssamru/arias.am/vendor/composer/autoload_real.php on line 66
+[20-Sep-2022 11:18:03 UTC] PHP Fatal error:  require(): Failed opening required '/home/gssamru/arias.am/vendor/composer/../ezyang/htmlpurifier/library/HTMLPurifier.composer.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/gssamru/arias.am/vendor/composer/autoload_real.php on line 66
+[20-Sep-2022 11:18:46 UTC] PHP Warning:  require(/home/gssamru/arias.am/vendor/composer/../ezyang/htmlpurifier/library/HTMLPurifier.composer.php): failed to open stream: No such file or directory in /home/gssamru/arias.am/vendor/composer/autoload_real.php on line 66
+[20-Sep-2022 11:18:46 UTC] PHP Fatal error:  require(): Failed opening required '/home/gssamru/arias.am/vendor/composer/../ezyang/htmlpurifier/library/HTMLPurifier.composer.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/gssamru/arias.am/vendor/composer/autoload_real.php on line 66
+[20-Sep-2022 11:18:47 UTC] PHP Warning:  require(/home/gssamru/arias.am/vendor/composer/../ezyang/htmlpurifier/library/HTMLPurifier.composer.php): failed to open stream: No such file or directory in /home/gssamru/arias.am/vendor/composer/autoload_real.php on line 66
+[20-Sep-2022 11:18:47 UTC] PHP Fatal error:  require(): Failed opening required '/home/gssamru/arias.am/vendor/composer/../ezyang/htmlpurifier/library/HTMLPurifier.composer.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/gssamru/arias.am/vendor/composer/autoload_real.php on line 66
