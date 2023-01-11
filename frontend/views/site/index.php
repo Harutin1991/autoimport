@@ -28,21 +28,8 @@ $this->title = Yii::t('app', 'ARIAS') . ' | ' . Yii::t('app', 'Home');
     <div id="slides_wrapper" class="">
         <div id="slides">
             <ul class="slides-container">
-                <?php foreach ($sliders as $slider): ?>
-                <li class="nav1">
-                    <img src="http://via.placeholder.com/1600x840" alt="" class="img">
-                    <div class="caption">
-                        <div class="container">
-                            <div class="txt1"><span>FIND YOUR DREAM CAR</span></div>
-                            <div class="txt2">CAR M5 GRAN TURISMO</div>
-                            <div class="txt3">MODEL 2017 <span>$64,000</span></div>
-                            <div class="link1"><a href="details.html" class="slider-link1"><span>SEE DETAILS</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <?php endforeach;?>
-                <li class="nav2">
+                <?php foreach ($sliders as $key=>$slider): ?>
+                <li class="nav<?=$key?>">
                     <img src="<?= Yii::$app->params['adminUrl'] . 'uploads/images/slider/' . $slider['id'] . '/' . $slider['path'] ?>" alt="" class="img">
                     <div class="caption">
                         <div class="container">
@@ -54,6 +41,7 @@ $this->title = Yii::t('app', 'ARIAS') . ' | ' . Yii::t('app', 'Home');
                         </div>
                     </div>
                 </li>
+                <?php endforeach;?>
             </ul>
             <nav class="slides-navigation">
                 <a href="#" class="next"></a>
