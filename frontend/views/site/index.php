@@ -21,7 +21,7 @@ $settings = $settings[0];
 //echo "<pre>";print_r($products);die;
 /* @var $this yii\web\View */
 
-$this->title = Yii::t('app', 'ARIAS') . ' | ' . Yii::t('app', 'Home');
+$this->title = Yii::t('app', 'Autoimport') . ' | ' . Yii::t('app', 'Home');
 
 ?>
 <div id="home" class="">
