@@ -31,8 +31,9 @@ class Marks extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['status'], 'integer'],
+            [['model_id', 'status'], 'integer'],
             [['name'], 'string', 'max' => 255],
+            [['model_id'], 'exist', 'skipOnError' => true, 'targetClass' => Models::class, 'targetAttribute' => ['model_id' => 'id']],
         ];
     }
 
@@ -44,8 +45,19 @@ class Marks extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
+            'model_id' => Yii::t('app', 'Model ID'),
             'status' => Yii::t('app', 'Status'),
         ];
+    }
+
+    /**
+     * Gets query for [[Model]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getModel()
+    {
+        return $this->hasOne(Models::class, ['id' => 'model_id']);
     }
 
     /**
