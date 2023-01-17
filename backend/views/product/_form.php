@@ -169,7 +169,7 @@ foreach ($languages as $value):
                                     ->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Product Code'), 'value'=> $productSku])->label(false)
                                 ?>
                             </div>
-							<div class="col-md-1">
+							<div class="col-md-2">
                                 <?=
                                 $form->field($model, 'price', ['template' => '<div class="col-md-12" style="padding: 0"><label for="customer-name" class="field prepend-icon">
                                     {input}<label for="customer-name" class="field-icon"><i class="fa fa-dollar"></i></label></label>{error}</div>'])
@@ -180,7 +180,7 @@ foreach ($languages as $value):
                                 <?=
                                 $form->field($model, 'mileage', ['template' => '<div class="col-md-12" style="padding: 0"><label for="customer-name" class="field prepend-icon">
                                     {input}<label for="customer-name" class="field-icon"><i class="fa fa-dollar"></i></label></label>{error}</div>'])
-                                    ->textInput(['placeholder' => Yii::t('app', 'Price')])->label(false)
+                                    ->textInput(['placeholder' => Yii::t('app', 'Select Mileage')])->label(false)
                                 ?>
                             </div>
                             <div class="col-md-2">
