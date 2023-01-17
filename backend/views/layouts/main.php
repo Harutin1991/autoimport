@@ -215,6 +215,7 @@ $action = '/message-system/create';
                             strpos($currentUrl, 'models') !== false ||
                             strpos($currentUrl, 'marks') !== false ||
                             strpos($currentUrl, 'engines') !== false ||
+                            strpos($currentUrl, 'engine-sizes') !== false ||
                             strpos($currentUrl, 'exterior-colors') !== false ||
                             strpos($currentUrl, 'interior-colors') !== false ||
                             strpos($currentUrl, 'body-types') !== false): ?>menu-open <?php endif; ?>"
@@ -244,7 +245,7 @@ $action = '/message-system/create';
                                 <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
 							<span class="sidebar-title">' . Yii::t('app', 'Engines') . '</span>', Url::to(['engines/index'])) ?>
                             </li>
-                            <li class="menu-link <?php if ($currentUrl == '/engine-size/index'): ?>active<?php endif ?>">
+                            <li class="menu-link <?php if ($currentUrl == '/engine-sizes/index'): ?>active<?php endif ?>">
                                 <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
 							<span class="sidebar-title">' . Yii::t('app', 'Engine Size') . '</span>', Url::to(['engine-size/index'])) ?>
                             </li>
