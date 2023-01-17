@@ -31,8 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'name',
-            'model_id',
-            'status',
+            ['attribute' => 'model_id',
+                'format' => 'html',
+                'value' => function ($model) {
+                     $modelName = $model->model;
+                    return ($modelName) ? $modelName->name : '';
+                }
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Marks $model, $key, $index, $column) {
