@@ -34,7 +34,6 @@ class ProductAddress extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['product_id', 'city_id', 'state_id', 'address_id'], 'required'],
             [['product_id', 'city_id', 'state_id', 'address_id'], 'integer'],
         ];
     }

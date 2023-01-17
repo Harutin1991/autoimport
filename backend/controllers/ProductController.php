@@ -248,16 +248,17 @@ class ProductController extends Controller
             ->scalar();
             $model->ordering = $order ? $order + 1 : 1;
             $model->rate = 0;
+            if(!empty($ProductAddress)) {
+                $address = Address::findOne($ProductAddress['address_id']);
+                $model->address = $address->address;
+                $address_id = $ProductAddress['address_id'];
 
-			$address = Address::findOne($ProductAddress['address_id']);
-			$model->address = $address->address;
-			$address_id = $ProductAddress['address_id'];
+                $state = States::findOne($post['ProductAddress']['state_id']);
+                $model->state = $state->name;
 
-            $state = States::findOne($post['ProductAddress']['state_id']);
-            $model->state = $state->name;
-
-            $city = Cities::findOne($post['ProductAddress']['city_id']);
-            $model->city = $city->name;
+                $city = Cities::findOne($post['ProductAddress']['city_id']);
+                $model->city = $city->name;
+            }
 
             if (!isset($post['Product']['is_allow_to_show'])) {
                 $model->is_allow_to_show = 0;
@@ -510,15 +511,17 @@ class ProductController extends Controller
         if (Yii::$app->request->post() && $model->load(Yii::$app->request->post())) {
             $oldRouteName = $model->route_name;
             $post = Yii::$app->request->post();
-			
-            $address = Address::findOne($ProductAddress['address_id']);
-            $model->address = $address->address;
-			$address_id = $ProductAddress['address_id'];
-            $state = States::findOne($post['ProductAddress']['state_id']);
-            $model->state = $state->name;
 
-            $city = Cities::findOne($post['ProductAddress']['city_id']);
-            $model->city = $city->name;
+            if(!empty($ProductAddress)) {
+                $address = Address::findOne($ProductAddress['address_id']);
+                $model->address = $address->address;
+                $address_id = $ProductAddress['address_id'];
+                $state = States::findOne($post['ProductAddress']['state_id']);
+                $model->state = $state->name;
+
+                $city = Cities::findOne($post['ProductAddress']['city_id']);
+                $model->city = $city->name;
+            }
 			
             $model->updated_date = ($price != $post['Product']['price']) ? new \yii\db\Expression('NOW()') : $model->updated_date;
 

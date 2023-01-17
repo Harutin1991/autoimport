@@ -236,7 +236,7 @@ foreach ($languages as $value):
                                 ?>
                                 <?=
                                 $form->field($model, 'status', ['template' => $template])->widget(Select2::className(), [
-                                    'data' => [Yii::t('app', "Unavailable"), Yii::t('app', "Active"), Yii::t('app', "Sales"), 'X'],
+                                    'data' => [Yii::t('app', "Unavailable"), Yii::t('app', "Active"), Yii::t('app', "Sales")],
                                     'language' => Yii::$app->language,
                                     'options' => ['placeholder' => Yii::t('app', 'Select Status')],
                                     'pluginOptions' => [
@@ -298,27 +298,6 @@ foreach ($languages as $value):
                                     ],
                                     'pluginLoading' => false,
                                 ])->label(false)
-                                ?>
-                            </div>
-                            <!--div class="col-md-4">
-                                <?php /*
-                                $form->field($productAddress, 'address_id', ['template' => $template])
-                                    ->textInput(['disabled' => $productAddress->city_id ? false : true])
-                                    ->label(false) */
-                                ?>
-                            </div -->
-                            <div class="col-md-1">
-                                <?=
-                                $form->field($model, 'addr_1', ['template' => '<div class="col-md-12" style="padding: 0"><label for="customer-name" class="field prepend-icon">
-                                        {label}{input}</label>{error}</div>'])
-                                    ->textInput(['maxlength' => true, 'value'=>$addr_1])->label(false)
-                                ?>
-                            </div>
-                            <div class="col-md-1">
-                                <?=
-                                $form->field($model, 'addr_2', ['template' => '<div class="col-md-12" style="padding: 0"><label for="customer-name" class="field prepend-icon">
-                                        {label}{input}</label>{error}</div>'])
-                                    ->textInput(['maxlength' => true,'value'=>$addr_2])->label(false)
                                 ?>
                             </div>
                         </div>
