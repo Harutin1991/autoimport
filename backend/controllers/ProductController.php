@@ -248,17 +248,12 @@ class ProductController extends Controller
             ->scalar();
             $model->ordering = $order ? $order + 1 : 1;
             $model->rate = 0;
-            if(!empty($ProductAddress)) {
-                $address = Address::findOne($ProductAddress['address_id']);
-                $model->address = $address->address;
-                $address_id = $ProductAddress['address_id'];
 
-                $state = States::findOne($post['ProductAddress']['state_id']);
-                $model->state = $state->name;
+            $model->address = isset($ProductAddress['address_id']) ? Address::findOne($ProductAddress['address_id'])->address : null;
 
-                $city = Cities::findOne($post['ProductAddress']['city_id']);
-                $model->city = $city->name;
-            }
+            $model->state = isset($ProductAddress['state_id']) ? States::findOne($post['ProductAddress']['state_id'])->name : null;
+
+            $model->city = isset($ProductAddress['city_id']) ?  Cities::findOne($post['ProductAddress']['city_id'])->name : null;
 
             if (!isset($post['Product']['is_allow_to_show'])) {
                 $model->is_allow_to_show = 0;
@@ -384,112 +379,6 @@ class ProductController extends Controller
         }
     }
 
-
-    public function actionFixNewProduct()
-    {
-        if (Yii::$app->request->isAjax) {
-            $model = new Product();
-
-            $state = Yii::$app->request->post('state');
-            $road = Yii::$app->request->post('road');
-            $addr_1 = Yii::$app->request->post('building_number');
-            $addr_2 = Yii::$app->request->post('app_number');
-            $mobile = Yii::$app->request->post('mobile');
-            $source = Yii::$app->request->post('source');
-            $buyer = Yii::$app->request->post('buyer');
-            $price = Yii::$app->request->post('price');
-            $level = Yii::$app->request->post('level');
-            $room = Yii::$app->request->post('room');
-
-
-            $model->state = 'Երևան';
-
-            $city = Cities::findOne($state);
-            $model->city = $city->name;
-            $model->rate = 0;
-
-            $address = Address::findOne($road);
-            $model->address = $address->address;
-            $model->addr_1 = $addr_1;
-            $model->addr_2 = $addr_2;
-            $model->phone1 = $mobile;
-            $model->source = $source;
-            $model->price = $price;
-            $model->client_name = $buyer;
-            $model->status = 1;
-            $model->forbid = 1;
-
-
-            if (\Yii::$app->user->identity->role == 1) {
-                $model->broker_id = \Yii::$app->user->identity->id;
-            } else {
-                $model->broker_id = 10;
-            }
-
-            if ($model->save(false)) {
-
-                $addressPlace = new ProductAddress();
-                $addressPlace->state_id = 232;
-                $addressPlace->city_id = $state;
-                $addressPlace->address_id = $road;
-                $addressPlace->product_id = $model->id;
-                $addressPlace->save();
-				
-				$ProductAttributeItems = [$level=>'',4=>$room];
-				if (!empty($ProductAttributeItems)) {
-                    $product_attribute_model = new ProductAttribute();
-                        $product_attribute_model->saveData($ProductAttributeItems, $model->id);
-                }
-				
-				if (!empty($level) && !empty($room)) {
-                    $attrs = [4, 38, 3, 2, 1, 14];
-                    $ids = [];
-                    $attrsToEdit = [];
-
-					$sub_attr_id = [4=>['value'=>$room,'option'=>4],2=>['option'=>$level]];
-                    foreach ($sub_attr_id as $key => $filters) {
-                        $product_filters = new ProductsFilters();
-                        $product_filters->product_id = $model->id;
-                        if (isset($filters['value'])) {
-                            $product_filters->value = $filters['value'];
-                        } else {
-                            $product_filters->value = $filters['option'];
-                        }
-
-                        $filter_id = isset($filters['option']) ? $filters['option'] : null;
-
-                        if (in_array($key, $attrs)) {
-                            if ($key == 3 || $key == 4 || $key == 38) {
-                                $attrsToEdit[$key] = $filters['value'];
-                            } else {
-                                $ids[] = $filter_id;
-                            }
-                        }
-
-                        $product_filters->filter_id = $filter_id;
-                        $product_filters->attribute_id = $key;
-                        $product_filters->save();
-                    }
-
-                    $attributes = Attribute::find()->where(['in', 'id', $ids])->asArray()->all();
-                    foreach ($attributes as $k => $v) {
-                        $attrsToEdit[$v['parent_id']] = $v['name'];
-                    }
-
-                    $model->json_attr = json_encode($attrsToEdit);
-                    $model->save();
-                }
-
-                echo json_encode(['success' => true]);
-
-            } else {
-                echo json_encode(['success' => false]);
-
-            };
-            exit();
-        }
-    }
-
     /**
      * Updates an existing Product model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -512,37 +401,11 @@ class ProductController extends Controller
             $oldRouteName = $model->route_name;
             $post = Yii::$app->request->post();
 
-            if(!empty($ProductAddress)) {
-                $address = Address::findOne($ProductAddress['address_id']);
-                $model->address = $address->address;
-                $address_id = $ProductAddress['address_id'];
-                $state = States::findOne($post['ProductAddress']['state_id']);
-                $model->state = $state->name;
+            $model->address = isset($ProductAddress['address_id']) ? Address::findOne($ProductAddress['address_id'])->address : null;
+            $model->state = isset($ProductAddress['state_id']) ? States::findOne($post['ProductAddress']['state_id'])->name : null;
+            $model->city = isset($ProductAddress['city_id']) ?  Cities::findOne($post['ProductAddress']['city_id'])->name : null;
 
-                $city = Cities::findOne($post['ProductAddress']['city_id']);
-                $model->city = $city->name;
-            }
-			
             $model->updated_date = ($price != $post['Product']['price']) ? new \yii\db\Expression('NOW()') : $model->updated_date;
-
-            if (strpos($model->product_sku, 'Դ-') !== false) {
-                $model->product_sku = str_replace('Դ-', '', $model->product_sku);
-            }
-            if (strpos($model->product_sku, 'Վ-') !== false) {
-                $model->product_sku = str_replace('Վ-', '', $model->product_sku);
-            }
-            if (strpos($model->product_sku, 'X-') !== false) {
-                $model->product_sku = str_replace('X-', '', $model->product_sku);
-            }
-
-            if (!$model->status) {
-                $model->product_sku = 'Դ-' . $model->product_sku;
-
-            } elseif ($model->status == 2) {
-                $model->product_sku = 'Վ-' . $model->product_sku;
-            } elseif ($model->status == 3) {
-                $model->product_sku = 'X-' . $model->product_sku;
-            }
 
             if (!isset($post['Product']['is_allow_to_show'])) {
                 $model->is_allow_to_show = 0;
@@ -557,13 +420,9 @@ class ProductController extends Controller
                 RuleHelper::setPath(Yii::$app->basePath . "/../frontend/config");
                 RuleHelper::updateRule($category->route_name . '/' . $model->route_name, "product/view", $model->id, $oldRouteName);
                 if (!empty($sub_attr_id)) {
-                    $filters = ProductsFilters::getDb()->createCommand()->
+                    ProductsFilters::getDb()->createCommand()->
                     delete(ProductsFilters::tableName(), ['product_id' => $model->id])
                         ->execute();
-
-                    $attrs = [4, 38, 3, 2, 1, 14];
-                    $ids = [];
-                    $attrsToEdit = [];
 
                     foreach ($sub_attr_id as $key => $filters) {
                         $product_filters = new ProductsFilters();
@@ -576,26 +435,11 @@ class ProductController extends Controller
                         }
                         $filter_id = isset($filters['option']) ? $filters['option'] : null;
 
-                        if (in_array($key, $attrs)) {
-                            if ($key == 3 || $key == 4 || $key == 38) {
-                                $attrsToEdit[$key] = $filters['value'];
-                            } else {
-                                $ids[] = $filter_id;
-                            }
-                        }
                         // 4 - hark, 38 - harkayunutyun, 3 - makeres, 2 - senyakner, 1 - tip, 14 - vichak,
                         $product_filters->filter_id = $filter_id;
                         $product_filters->attribute_id = $key;
                         $product_filters->save();
                     }
-
-                    $attributes = Attribute::find()->where(['in', 'id', $ids])->asArray()->all();
-                    foreach ($attributes as $k => $v) {
-                        $attrsToEdit[$v['parent_id']] = $v['name'];
-                    }
-                    $model->json_attr = json_encode($attrsToEdit);
-                    $model->save();
-
                 }
 
                 if (!empty($ProductAddress)) {
@@ -629,7 +473,7 @@ class ProductController extends Controller
                         $product_attribute_model->saveData($ProductAttributeItems['value'], $model->id);
                     }
                 }
-                $detailsResult = [];
+
                 if (isset($ProductsDetails['old_name']) && !empty($ProductsDetails['old_name'])) {
                     if (!empty($ProductsDetails['name'])) {
                         $detailsResult = array_merge_recursive($ProductsDetails['name'], $ProductsDetails['old_name']);
@@ -644,7 +488,7 @@ class ProductController extends Controller
                 $images = UploadedFile::getInstances($model, 'imageFiles');
                 if ($images) {
                     $paths = $this->upload($images, $model->id);
-                    $product_image_model->multiSave($paths, $model->id, '', 1);
+                    $product_image_model->multiSave($paths, $model->id, $ProdDefImg, 1);
                 } else {
                     $productImages = ProductImage::find()->where(['product_id' => $model->id, 'resized' => 0])->asArray()->all();
                     foreach ($productImages as $image) {
