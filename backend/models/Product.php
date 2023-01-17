@@ -450,18 +450,15 @@ class Product extends \yii\db\ActiveRecord
         return true;
     }
 
-    public function getStatus($status)
+    public function getAllModels()
     {
-        if ($status == 0) {
-            return 'Դադարեցված';
-        } elseif ($status == 1) {
-            return 'Ակտիվ';
-        } elseif ($status == 2) {
-            return 'Վաճառված';
-        } elseif ($status == 3) {
-            return 'X';
-        } else {
-            return '';
-        }
+        $models = Models::find()->all();
+        return ArrayHelper::map($models, 'id', 'name');
+    }
+
+    public function getAllMarks()
+    {
+        $marks = Marks::find()->all();
+        return ArrayHelper::map($marks, 'id', 'name');
     }
 }

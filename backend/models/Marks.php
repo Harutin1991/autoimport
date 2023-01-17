@@ -46,7 +46,7 @@ class Marks extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
-            'model_id' => Yii::t('app', 'Model ID'),
+            'model_id' => Yii::t('app', 'Model Name'),
             'status' => Yii::t('app', 'Status'),
         ];
     }

@@ -155,7 +155,7 @@ foreach ($languages as $value):
                 <div class="panel-body" style="display: block;">
                     <div class="tab-content pn br-n admin-form">
                         <div class="tab-content row">
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <?=
                                 $form->field($model, 'name', ['template' => '<div class="col-md-12" style="padding: 0"><label for="customer-name" class="field prepend-icon">
                                         {input}<label for="customer-name" class="field-icon"><i class="fa fa-tags"></i></label></label>{error}</div>'])
@@ -174,6 +174,34 @@ foreach ($languages as $value):
                                 $form->field($model, 'price', ['template' => '<div class="col-md-12" style="padding: 0"><label for="customer-name" class="field prepend-icon">
                                     {input}<label for="customer-name" class="field-icon"><i class="fa fa-dollar"></i></label></label>{error}</div>'])
                                     ->textInput(['placeholder' => Yii::t('app', 'Price')])->label(false)
+                                ?>
+                            </div>
+                            <div class="col-md-2">
+                                <?=
+                                $form->field($model, 'model_id', ['template' => $template])->widget(Select2::className(), [
+                                    'data' => $model->getAllModels(),
+                                    'language' => Yii::$app->language,
+                                    'options' => ['placeholder' => Yii::t('app', 'Select Model')], //'onchange'=>'getProductAttr(this.value,"'.Yii::$app->language.'")'
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                        'multiple' => false,
+                                    ],
+                                    'pluginLoading' => false,
+                                ])->label(false)
+                                ?>
+                            </div>
+                            <div class="col-md-2">
+                                <?=
+                                $form->field($model, 'mark_id', ['template' => $template])->widget(Select2::className(), [
+                                    'data' => $model->getAllMarks(),
+                                    'language' => Yii::$app->language,
+                                    'options' => ['placeholder' => Yii::t('app', 'Select Mark')], //'onchange'=>'getProductAttr(this.value,"'.Yii::$app->language.'")'
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                        'multiple' => false,
+                                    ],
+                                    'pluginLoading' => false,
+                                ])->label(false)
                                 ?>
                             </div>
                         </div>
