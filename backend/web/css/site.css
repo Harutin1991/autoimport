@@ -3,6 +3,9 @@ body {
     height: 100%;
     min-height: 900px !important;
 }
+.colorDot{
+    height: 25px;width: 25px; border-radius: 50%; display: inline-block;
+}
 
 .wrap {
     min-height: 100%;

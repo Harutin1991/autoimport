@@ -34,8 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['attribute' => 'color',
                 'format' => 'html',
                 'value' => function ($model) {
-                    $style = "height: 25px;width: 25px;border-radius: 50%;display: inline-block;background-color:#{$model->color}";
-                    return "<span style='{$style}'></span>";
+                    return "<span class='colorDot' style='background-color:{$model->color}'></span>";
                 },
                 'filterInputOptions' => [
                     'class' => 'form-control',
