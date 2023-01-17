@@ -28,7 +28,7 @@ class ProductSearch extends Product {
             [['id', 'status', 'category_id', 'rate', 'price'], 'integer'],
             [['name', 'description', 'short_description', 'created_date', 'updated_date', 'product_sku'], 'safe'],
             [['price'], 'number'],
-            [['address', 'addr_1', 'addr_2'], 'string'],
+            [['address'], 'string'],
         ];
     }
 
@@ -250,14 +250,6 @@ class ProductSearch extends Product {
 
         if(isset($params['address']) && !empty($params['address'])) {
             $query->andFilterWhere(['like', 'address', $params['address']]);
-        }
-
-        if(isset($params['addr_1']) && !empty($params['addr_1'])) {
-            $query->andFilterWhere(['=', 'addr_1', $params['addr_1']]);
-        }
-
-        if(isset($params['addr_2']) && !empty($params['addr_2'])) {
-            $query->andFilterWhere(['=', 'addr_2', $params['addr_2']]);
         }
 
         if(isset($params['city']) && !empty($params['city'])) {

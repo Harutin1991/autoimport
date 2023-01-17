@@ -64,7 +64,6 @@ class BrockerAddressesController extends Controller
 		'addr_1'=>Yii::$app->request->post('addr_part_1'),
 		'addr_2'=>Yii::$app->request->post('addr_part_2')])->one();
 			if(empty($product)){
-				$model->brocker_id = Yii::$app->user->identity->id;
 				$model->status = 1;
 				if($model->save()){
 					return $this->redirect('/brocker-addresses/my-addresses');
