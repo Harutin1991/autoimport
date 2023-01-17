@@ -25,7 +25,7 @@ use kartik\select2\Select2;
                 'multiple' => false,
             ],
             'pluginLoading' => false,
-        ])->label(false)
+        ])->label(Yii::t('app','Select Model'))
         ?>
     </div>
 

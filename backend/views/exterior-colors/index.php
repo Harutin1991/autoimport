@@ -31,7 +31,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'name',
-            'color',
+            ['attribute' => 'color',
+                'format' => 'html',
+                'value' => function ($model) {
+                    return "<span style='background-color: {$model->color}'></span>";
+                },
+                'filterInputOptions' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Search'
+                ],
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, ExteriorColors $model, $key, $index, $column) {
