@@ -264,7 +264,7 @@ foreach ($languages as $value):
                                 $form->field($model, 'engine_id', ['template' => $template])->widget(Select2::className(), [
                                     'data' => $model->getAllEngines(),
                                     'language' => Yii::$app->language,
-                                    'options' => ['placeholder' => Yii::t('app', 'Select Engine')], //'onchange'=>'getProductAttr(this.value,"'.Yii::$app->language.'")'
+                                    'options' => ['placeholder' => Yii::t('app', 'Select Engine Type')], //'onchange'=>'getProductAttr(this.value,"'.Yii::$app->language.'")'
                                     'pluginOptions' => [
                                         'allowClear' => true,
                                         'multiple' => false,
@@ -295,7 +295,48 @@ foreach ($languages as $value):
                             </div>
                         </div>
                         <div class="section row" style="margin-top: 20px;">
-
+                            <div class="col-md-2">
+                                <?=
+                                $form->field($model, 'body_type_id', ['template' => $template])->widget(Select2::className(), [
+                                    'data' => $model->getAllBodyTypes(),
+                                    'language' => Yii::$app->language,
+                                    'options' => ['placeholder' => Yii::t('app', 'Select Body Type')], //'onchange'=>'getProductAttr(this.value,"'.Yii::$app->language.'")'
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                        'multiple' => false,
+                                    ],
+                                    'pluginLoading' => false,
+                                ])->label(false)
+                                ?>
+                            </div>
+                            <div class="col-md-2">
+                                <?=
+                                $form->field($model, 'transmission', ['template' => $template])->widget(Select2::className(), [
+                                    'data' => [Yii::t('app','Manual'), Yii::t('app', 'Automatic')],
+                                    'language' => Yii::$app->language,
+                                    'options' => ['placeholder' => Yii::t('app', 'Select Transmission')], //'onchange'=>'getProductAttr(this.value,"'.Yii::$app->language.'")'
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                        'multiple' => false,
+                                    ],
+                                    'pluginLoading' => false,
+                                ])->label(false)
+                                ?>
+                            </div>
+                            <div class="col-md-2">
+                                <?=
+                                $form->field($model, 'drive_type', ['template' => $template])->widget(Select2::className(), [
+                                    'data' => [Yii::t('app','Front Wheel'), Yii::t('app', 'Rear Wheel'), Yii::t('app', 'All Wheel')],
+                                    'language' => Yii::$app->language,
+                                    'options' => ['placeholder' => Yii::t('app', 'Select Drive Type')], //'onchange'=>'getProductAttr(this.value,"'.Yii::$app->language.'")'
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                        'multiple' => false,
+                                    ],
+                                    'pluginLoading' => false,
+                                ])->label(false)
+                                ?>
+                            </div>
                         </div>
 
                         <div class="section row">

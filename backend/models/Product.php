@@ -473,4 +473,10 @@ class Product extends \yii\db\ActiveRecord
         $engineSize = EngineSizes::find()->all();
         return ArrayHelper::map($engineSize, 'id', 'name');
     }
+
+    public function getAllBodyTypes()
+    {
+        $bodyTypes = BodyTypes::find()->all();
+        return ArrayHelper::map($bodyTypes, 'id', 'name');
+    }
 }

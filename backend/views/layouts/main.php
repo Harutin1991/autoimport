@@ -235,9 +235,17 @@ $action = '/message-system/create';
                                 <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
 							<span class="sidebar-title">' . Yii::t('app', 'Marks') . '</span>', Url::to(['marks/index'])) ?>
                             </li>
+                            <li class="menu-link <?php if ($currentUrl == '/body-type/index'): ?>active<?php endif ?>">
+                                <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
+							<span class="sidebar-title">' . Yii::t('app', 'Body Type') . '</span>', Url::to(['body-type/index'])) ?>
+                            </li>
                             <li class="menu-link <?php if ($currentUrl == '/engines/index'): ?>active<?php endif ?>">
                                 <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
 							<span class="sidebar-title">' . Yii::t('app', 'Engines') . '</span>', Url::to(['engines/index'])) ?>
+                            </li>
+                            <li class="menu-link <?php if ($currentUrl == '/engine-size/index'): ?>active<?php endif ?>">
+                                <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
+							<span class="sidebar-title">' . Yii::t('app', 'Engine Size') . '</span>', Url::to(['engine-size/index'])) ?>
                             </li>
                             <li class="menu-link <?php if ($currentUrl == '/exterior-colors/index'): ?>active<?php endif ?>">
                                 <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
