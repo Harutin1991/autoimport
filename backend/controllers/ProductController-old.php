@@ -420,13 +420,6 @@ class ProductController extends Controller {
             $model->client_name = $buyer; 
             $model->status = 1;
             $model->forbid = 1;
-			
-
-            if(\Yii::$app->user->identity->role == 1) {
-                $model->broker_id = \Yii::$app->user->identity->id;
-            } else {
-                $model->broker_id = 10;
-            }
 
             if($model->save(false)) {
 

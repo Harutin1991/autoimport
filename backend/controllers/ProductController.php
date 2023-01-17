@@ -387,161 +387,156 @@ class ProductController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-		$price = $model->price;
-        $product_image_model = new ProductImage();
-        $product_attribute_model = new ProductAttribute();
-        $ProdDefImg = Yii::$app->request->post('defaultImage');
-        $ProductAttributeItems = Yii::$app->request->post('ProductAttribute');
-        $ProductsDetails = Yii::$app->request->post('ProductsDetails');
-        $ProductAddress = Yii::$app->request->post('ProductAddress');
-        $sub_attr_id = Yii::$app->request->post('sub_attr_id');
-        $ProductsDetails_model = new ProductsDetails();
-        if (Yii::$app->request->post() && $model->load(Yii::$app->request->post())) {
-            $oldRouteName = $model->route_name;
-            $post = Yii::$app->request->post();
+        $connection = Yii::$app->getDb();
+        $transaction = $connection->beginTransaction();
+        try {
+            $model = $this->findModel($id);
+            $price = $model->price;
+            $product_image_model = new ProductImage();
+            $product_attribute_model = new ProductAttribute();
+            $ProdDefImg = Yii::$app->request->post('defaultImage');
+            $ProductAttributeItems = Yii::$app->request->post('ProductAttribute');
+            $ProductsDetails = Yii::$app->request->post('ProductsDetails');
+            $ProductAddress = Yii::$app->request->post('ProductAddress');
+            $sub_attr_id = Yii::$app->request->post('sub_attr_id');
+            $ProductsDetails_model = new ProductsDetails();
 
-            $model->address = isset($ProductAddress['address_id']) ? Address::findOne($ProductAddress['address_id'])->address : null;
-            $model->state = isset($ProductAddress['state_id']) ? States::findOne($post['ProductAddress']['state_id'])->name : null;
-            $model->city = isset($ProductAddress['city_id']) ?  Cities::findOne($post['ProductAddress']['city_id'])->name : null;
+            if (Yii::$app->request->post() && $model->load(Yii::$app->request->post())) {
+                $oldRouteName = $model->route_name;
+                $post = Yii::$app->request->post();
 
-            $model->updated_date = ($price != $post['Product']['price']) ? new \yii\db\Expression('NOW()') : $model->updated_date;
+                $model->address = isset($ProductAddress['address_id']) ? Address::findOne($ProductAddress['address_id'])->address : null;
+                $model->state = isset($ProductAddress['state_id']) ? States::findOne($post['ProductAddress']['state_id'])->name : null;
+                $model->city = isset($ProductAddress['city_id']) ? Cities::findOne($post['ProductAddress']['city_id'])->name : null;
 
-            if (!isset($post['Product']['is_allow_to_show'])) {
-                $model->is_allow_to_show = 0;
-            } else {
-                $model->is_allow_to_show = 1;
-            }
+                $model->updated_date = ($price != $post['Product']['price']) ? new \yii\db\Expression('NOW()') : $model->updated_date;
 
-            $model->forbid = 0;
-            if ($model->save()) {
-                $category = Category::findOne($model->category_id);
-                RuleHelper::setFile("product-routes.json");
-                RuleHelper::setPath(Yii::$app->basePath . "/../frontend/config");
-                RuleHelper::updateRule($category->route_name . '/' . $model->route_name, "product/view", $model->id, $oldRouteName);
-                if (!empty($sub_attr_id)) {
-                    ProductsFilters::getDb()->createCommand()->
-                    delete(ProductsFilters::tableName(), ['product_id' => $model->id])
-                        ->execute();
-
-                    foreach ($sub_attr_id as $key => $filters) {
-                        $product_filters = new ProductsFilters();
-                        $product_filters->product_id = $model->id;
-
-                        if (isset($filters['value'])) {
-                            $product_filters->value = $filters['value'];
-                        } else {
-                            $product_filters->value = $filters['option'];
-                        }
-                        $filter_id = isset($filters['option']) ? $filters['option'] : null;
-
-                        // 4 - hark, 38 - harkayunutyun, 3 - makeres, 2 - senyakner, 1 - tip, 14 - vichak,
-                        $product_filters->filter_id = $filter_id;
-                        $product_filters->attribute_id = $key;
-                        $product_filters->save();
-                    }
-                }
-
-                if (!empty($ProductAddress)) {
-                    $addressPlace = ProductAddress::findOne(['product_id' => $model->id]);
-                    if (!$addressPlace) {
-                        $addressPlace = new ProductAddress();
-                    }
-                    $addressPlace->load($post);
-                    $addressPlace->product_id = $model->id;
-                    if(!$addressPlace->save()) {
-						echo "<pre>";print_r($addressPlace->getErrors());die;
-					}
-                }
-
-                $objLang = new Language();
-                $languages = $objLang->find()->asArray()->all();
-                foreach ($languages as $value) {
-                    $trproduct = TrProduct::find()->where(['product_id' => $model->id, 'language_id' => $value['id']])->one();
-                    if (!$trproduct) {
-                        $trproduct = new TrProduct();
-                    }
-                    $trproduct->name = $model->name;
-                    $trproduct->short_description = $model->short_description;
-                    $trproduct->description = $model->description;
-                    $trproduct->save();
-                }
-
-
-                if (!empty($ProductAttributeItems)) {
-                    foreach ($ProductAttributeItems as $key => $value) {
-                        $product_attribute_model->saveData($ProductAttributeItems['value'], $model->id);
-                    }
-                }
-
-                if (isset($ProductsDetails['old_name']) && !empty($ProductsDetails['old_name'])) {
-                    if (!empty($ProductsDetails['name'])) {
-                        $detailsResult = array_merge_recursive($ProductsDetails['name'], $ProductsDetails['old_name']);
-                    } else {
-                        $detailsResult = $ProductsDetails['name'];
-                    }
-                    $ProductsDetails_model->saveData($detailsResult, $model->id);
-                } elseif (!empty($ProductsDetails['name'])) {
-                    $ProductsDetails_model->saveData($ProductsDetails['name'], $model->id);
-                }
-
-                $images = UploadedFile::getInstances($model, 'imageFiles');
-                if ($images) {
-                    $paths = $this->upload($images, $model->id);
-                    $product_image_model->multiSave($paths, $model->id, $ProdDefImg, 1);
+                if (!isset($post['Product']['is_allow_to_show'])) {
+                    $model->is_allow_to_show = 0;
                 } else {
-                    $productImages = ProductImage::find()->where(['product_id' => $model->id, 'resized' => 0])->asArray()->all();
-                    foreach ($productImages as $image) {
-                        $this->updateImages($image['name']);
-                    }
-                    $product_image_model->multiUpdate($model->id);
+                    $model->is_allow_to_show = 1;
                 }
-                $model->updateDefaultTranslate();
-                Yii::$app->session->setFlash('success', Yii::t('app', 'Product successfully updated'));
-                return $this->redirect(['product/update',
-                    'id' => $model->id,
-                ]);
-            } else {
-                $products = Product::find()->where(['!=', 'id', $id])->asArray()->all();
-                $connProducts = ConnectedProducts::find()->where(['product_id'=> $id])->asArray()->all();
-                $detailsModel = new ProductsDetails();
-                $productDetails = ProductsDetails::find()->where(['product_id' => $id])->asArray()->all();
-                $addressPlace = ProductAddress::findOne(['product_id' => $model->id]);
-				$productAttr = ProductAttribute::find()->where(['product_id' => $id])->asArray()->all();
-				
-                return $this->render('update', [
-                    'model' => $model,
-                    'addressPlace' => $addressPlace,
-                    'products' => $products,
-                    'detailsModel' => $detailsModel,
-					'productAttr' => $productAttr,
-                    'connProducts' => $connProducts,
-                    'productDetails' => $productDetails,
-                    'categories' => $model->getAllCategories(),
-                    'product_attribute_model' => $product_attribute_model,
-                ]);
+
+                $model->forbid = 0;
+                if ($model->save()) {
+                    $category = Category::findOne($model->category_id);
+                    RuleHelper::setFile("product-routes.json");
+                    RuleHelper::setPath(Yii::$app->basePath . "/../frontend/config");
+                    RuleHelper::updateRule($category->route_name . '/' . $model->route_name, "product/view", $model->id, $oldRouteName);
+                    if (!empty($sub_attr_id)) {
+                        ProductsFilters::getDb()->createCommand()->
+                        delete(ProductsFilters::tableName(), ['product_id' => $model->id])
+                            ->execute();
+
+                        foreach ($sub_attr_id as $key => $filters) {
+                            $product_filters = new ProductsFilters();
+                            $product_filters->product_id = $model->id;
+
+                            if (isset($filters['value'])) {
+                                $product_filters->value = $filters['value'];
+                            } else {
+                                $product_filters->value = $filters['option'];
+                            }
+                            $filter_id = isset($filters['option']) ? $filters['option'] : null;
+
+                            // 4 - hark, 38 - harkayunutyun, 3 - makeres, 2 - senyakner, 1 - tip, 14 - vichak,
+                            $product_filters->filter_id = $filter_id;
+                            $product_filters->attribute_id = $key;
+                            $product_filters->save();
+                        }
+                    }
+
+                    if (!empty($ProductAddress)) {
+                        $addressPlace = ProductAddress::findOne(['product_id' => $model->id]);
+                        if (!$addressPlace) {
+                            $addressPlace = new ProductAddress();
+                        }
+                        $addressPlace->load($post);
+                        $addressPlace->product_id = $model->id;
+                        if (!$addressPlace->save()) {
+                            echo "<pre>";
+                            print_r($addressPlace->getErrors());
+                            die;
+                        }
+                    }
+
+                    $objLang = new Language();
+                    $languages = $objLang->find()->asArray()->all();
+                    foreach ($languages as $value) {
+                        $trproduct = TrProduct::find()->where(['product_id' => $model->id, 'language_id' => $value['id']])->one();
+                        if (!$trproduct) {
+                            $trproduct = new TrProduct();
+                        }
+                        $trproduct->name = $model->name;
+                        $trproduct->short_description = $model->short_description;
+                        $trproduct->description = $model->description;
+                        $trproduct->save();
+                    }
+
+
+                    if (!empty($ProductAttributeItems)) {
+                        foreach ($ProductAttributeItems as $key => $value) {
+                            $product_attribute_model->saveData($ProductAttributeItems['value'], $model->id);
+                        }
+                    }
+
+                    if (isset($ProductsDetails['old_name']) && !empty($ProductsDetails['old_name'])) {
+                        if (!empty($ProductsDetails['name'])) {
+                            $detailsResult = array_merge_recursive($ProductsDetails['name'], $ProductsDetails['old_name']);
+                        } else {
+                            $detailsResult = $ProductsDetails['name'];
+                        }
+                        $ProductsDetails_model->saveData($detailsResult, $model->id);
+                    } elseif (!empty($ProductsDetails['name'])) {
+                        $ProductsDetails_model->saveData($ProductsDetails['name'], $model->id);
+                    }
+
+                    $images = UploadedFile::getInstances($model, 'imageFiles');
+                    if ($images) {
+                        $paths = $this->upload($images, $model->id);
+                        $product_image_model->multiSave($paths, $model->id, $ProdDefImg, 1);
+                    } else {
+                        $productImages = ProductImage::find()->where(['product_id' => $model->id, 'resized' => 0])->asArray()->all();
+                        foreach ($productImages as $image) {
+                            $this->updateImages($image['name']);
+                        }
+                        $product_image_model->multiUpdate($model->id);
+                    }
+                    $model->updateDefaultTranslate();
+                    Yii::$app->session->setFlash('success', Yii::t('app', 'Product successfully updated'));
+                    return $this->redirect(['product/update',
+                        'id' => $model->id,
+                    ]);
+                }
             }
-        } else {
-            $products = Product::find()->where(['!=', 'id', $id])->asArray()->all();
-            $connProductsAll = ConnectedProducts::find()->where(['product_id' => $id])->asArray()->all();
-            $connProducts = [];
-            foreach ($connProductsAll as $productID) {
-                $connProducts[$productID['product_id']][] = $productID['conn_product_id'];
-            }
-            $productAttr = ProductAttribute::find()->where(['product_id' => $id])->asArray()->all();
-            $detailsModel = new ProductsDetails();
-            $productDetails = ProductsDetails::find()->where(['product_id' => $id])->asArray()->all();
-            return $this->render('update', [
-                'model' => $model,
-                'products' => $products,
-                'detailsModel' => $detailsModel,
-                'productDetails' => $productDetails,
-                'productAttr' => $productAttr,
-                'connProducts' => $connProducts,
-                'categories' => $model->getAllCategories(),
-                'product_attribute_model' => $product_attribute_model,
-            ]);
+            $transaction->commit();
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
         }
+
+        $products = Product::find()->where(['!=', 'id', $id])->asArray()->all();
+        $connProductsAll = ConnectedProducts::find()->where(['product_id' => $id])->asArray()->all();
+        $connProducts = [];
+        foreach ($connProductsAll as $productID) {
+            $connProducts[$productID['product_id']][] = $productID['conn_product_id'];
+        }
+        $productAttr = ProductAttribute::find()->where(['product_id' => $id])->asArray()->all();
+        $detailsModel = new ProductsDetails();
+        $productDetails = ProductsDetails::find()->where(['product_id' => $id])->asArray()->all();
+        return $this->render('update', [
+            'model' => $model,
+            'products' => $products,
+            'detailsModel' => $detailsModel,
+            'productDetails' => $productDetails,
+            'productAttr' => $productAttr,
+            'connProducts' => $connProducts,
+            'categories' => $model->getAllCategories(),
+            'product_attribute_model' => $product_attribute_model,
+        ]);
     }
 
     /**

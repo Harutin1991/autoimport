@@ -40,13 +40,6 @@ class BrockerAddressesSearch extends BrockerAddresses
      */
     public function search($params,$broker_id = null)
     {
-		if(!is_null($broker_id)) {
-			$query = BrockerAddresses::find()->where(['brocker_id'=>$broker_id]);
-		} else {
-			$query = BrockerAddresses::find();
-		}
-        
-
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([

@@ -25,7 +25,7 @@ class ProductSearch extends Product {
      */
     public function rules() {
         return [
-            [['id', 'status', 'category_id', 'rate', 'broker_id', 'price'], 'integer'],
+            [['id', 'status', 'category_id', 'rate', 'price'], 'integer'],
             [['name', 'description', 'short_description', 'created_date', 'updated_date', 'product_sku'], 'safe'],
             [['price'], 'number'],
             [['address', 'addr_1', 'addr_2'], 'string'],
@@ -58,14 +58,9 @@ class ProductSearch extends Product {
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['attributes' => ['product_sku', 'price', 'broker_id']]
+            'sort' => ['attributes' => ['product_sku', 'price']]
         ]);
 
-//        if(\Yii::$app->user->identity->role == 1 && !$params) {
-//            $query->andFilterWhere(['=', 'broker_id', \Yii::$app->user->identity->id]);
-//
-//            return $dataProvider;
-//        }
 
         $this->load($params);
 
@@ -251,10 +246,6 @@ class ProductSearch extends Product {
                     $query->andFilterWhere(['in', 'id', $productIds]);
                 }
             }
-        }
-
-        if(isset($params['Product']['broker_id']) && !empty($params['Product']['broker_id'])) {
-            $query->andFilterWhere(['broker_id' => $params['Product']['broker_id']]);
         }
 
         if(isset($params['address']) && !empty($params['address'])) {
