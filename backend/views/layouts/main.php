@@ -220,6 +220,26 @@ $action = '/message-system/create';
                                 <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
 							<span class="sidebar-title">' . Yii::t('app', 'Categories') . '</span>', Url::to(['category/index'])) ?>
                             </li>
+                            <li class="menu-link <?php if ($currentUrl == '/models/index'): ?>active<?php endif ?>">
+                                <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
+							<span class="sidebar-title">' . Yii::t('app', 'Models') . '</span>', Url::to(['models/index'])) ?>
+                            </li>
+                            <li class="menu-link <?php if ($currentUrl == '/marks/index'): ?>active<?php endif ?>">
+                                <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
+							<span class="sidebar-title">' . Yii::t('app', 'Marks') . '</span>', Url::to(['marks/index'])) ?>
+                            </li>
+                            <li class="menu-link <?php if ($currentUrl == '/engines/index'): ?>active<?php endif ?>">
+                                <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
+							<span class="sidebar-title">' . Yii::t('app', 'Engines') . '</span>', Url::to(['engines/index'])) ?>
+                            </li>
+                            <li class="menu-link <?php if ($currentUrl == '/exterior_colors/index'): ?>active<?php endif ?>">
+                                <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
+							<span class="sidebar-title">' . Yii::t('app', 'Exterior Colors') . '</span>', Url::to(['exterior_colors/index'])) ?>
+                            </li>
+                            <li class="menu-link <?php if ($currentUrl == '/interior_colors/index'): ?>active<?php endif ?>">
+                                <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
+							<span class="sidebar-title">' . Yii::t('app', 'Interior Colors') . '</span>', Url::to(['interior_colors/index'])) ?>
+                            </li>
                             <li class="menu-link <?php if ($currentUrl == '/attribute/index'): ?>active<?php endif ?>">
                                 <?= Html::a('<span class="glyphicon glyphicon-book"></span>
                         <span class="sidebar-title">' . Yii::t('app', 'Filters') . '</span>', Url::to(['attribute/index'])) ?>
