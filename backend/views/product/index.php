@@ -134,51 +134,9 @@ $attribute = new Attribute();
 
 </div>
 <div class="catalog">
-<!--    <div class="padding-section">-->
-<!--        <div class="row">-->
-<!--            <div class="col-lg-12">-->
-<!--                <div class="slider-wrap">-->
-<!--                    <form onsubmit="return saveBrokerAddress();"></form>-->
-<!--                    <h2>--><?//= Yii::t('app', 'Address') ?><!--</h2>-->
-<!--                    <div class="col-lg-4 col-sm-3">-->
-<!--                        <label>--><?//= Yii::t('app', 'Address') ?><!--</label>-->
-<!--                        <input type="text" id="broker_address" class="form-control" placeholder="" name="address"/>-->
-<!--                    </div>-->
-<!--                    <div class="col-lg-2 col-sm-1">-->
-<!--                        <label>--><?//= Yii::t('app', 'Address Part 1') ?><!--</label>-->
-<!--                        <input type="text" id="broker_buliding_number" class="form-control" placeholder=""-->
-<!--                               name="address"/>-->
-<!--                    </div>-->
-<!--                    <div class="col-lg-2 col-sm-1">-->
-<!--                        <label>ԲՆ. Համար</label>-->
-<!--                        <input type="text" id="broker_appartment_number" class="form-control" placeholder=""-->
-<!--                               name="address"/>-->
-<!--                    </div>-->
-<!--                    <div class="col-lg-1 col-sm-3">-->
-<!--                        <label>Բրոկեր</label>-->
-<!--                        <select name="brockers" class="form-control" id="broker_id">-->
-<!--                            --><?php //if (!empty($brockers)): ?>
-<!--                                --><?php //foreach ($brockers as $broker): ?>
-<!--                                    <option value="--><?//= $broker['id'] ?><!--">--><?//= $broker['user_number'] ?><!--</option>-->
-<!--                                --><?php //endforeach; ?>
-<!--                            --><?php //endif; ?>
-<!--                        </select>-->
-<!--                    </div>-->
-<!--                    <div class="col-lg-3 col-sm-3">-->
-<!--                        <button class="btn btn-info">--><?//= Yii::t('app', 'Search') ?><!--</button>-->
-<!--                        <button class="btn btn-success" type="submit">--><?//= Yii::t('app', 'Save Address') ?><!--</button>-->
-<!---->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <hr>-->
     <div class="padding-section">
 
         <?php $form = ActiveForm::begin(['method' => 'get','action' => '']); ?>
-<!--        <form action="" id="filter_product">-->
             <div class="row">
                 <div class="col-lg-4 col-sm-3">
                     <label><?= Yii::t('app', 'Select Category') ?></label>
@@ -200,7 +158,7 @@ $attribute = new Attribute();
                     <label><?= Yii::t('app', 'Select Status') ?></label>
 
                     <?php
-                        $status = [0 => Yii::t('app', "Unavailable"), 1 => Yii::t('app', "Active"), 2 => Yii::t('app', "Sales"), 3 => 'X'];
+                        $status = [0 => Yii::t('app', "Unavailable"), 1 => Yii::t('app', "Active")];
                     ?>
                     <?=
                     $form->field($product, 'status', ['template' => $template])->widget(Select2::className(), [

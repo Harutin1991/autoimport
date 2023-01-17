@@ -162,7 +162,7 @@ if (isset($error) && $error) {
                     <header>
                         <div class="logo_wrapper">
                             <a href="/<?= Yii::$app->language ?>/" class="logo scroll-to">
-                                <img src="/img/autoimport.jpg" alt="" class="img-responsive">
+                                <img src="/img/autoimport.jpg" alt="" class="img-responsive" style="width: 20%;">
                             </a>
                         </div>
                     </header>
