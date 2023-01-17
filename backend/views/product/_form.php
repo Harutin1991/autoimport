@@ -60,40 +60,17 @@ $subCategory = null;
 $stateId = null;
 $cityId = null;
 $addressId = null;
-$brokerId = null;
-$addr_1 = null;
-$addr_2 = null;
+$postRequest = Yii::$app->request->getQueryParam('Product', []);
 if($model->isNewRecord && Yii::$app->request->getQueryParam('product_sku', '')) {
 	$productSku = Yii::$app->request->getQueryParam('product_sku', '');
 } else {
 	$productSku = $model->product_sku;
 }
 
-if($model->isNewRecord && Yii::$app->request->getQueryParam('addr_1', '')) {
-	$addr_1 = Yii::$app->request->getQueryParam('addr_1', '');
-} else {
-	$addr_1 = $model->addr_1;
-}
-
-if($model->isNewRecord && Yii::$app->request->getQueryParam('addr_2', '')) {
-	$addr_2 = Yii::$app->request->getQueryParam('addr_2', '');
-} else {
-	$addr_2 = $model->addr_2;
-}
-
-if($model->isNewRecord && !empty(Yii::$app->request->getQueryParam('Product', [])) && isset(Yii::$app->request->getQueryParam('Product', [])['category_id'])) {
+if($model->isNewRecord && !empty($postRequest) && isset($postRequest['category_id'])) {
 	$categoryId = Yii::$app->request->getQueryParam('Product', [])['category_id'];
 } elseif(!$model->isNewRecord) {
 	$categoryId = $model->category_id;
-}
-if(Yii::$app->user->identity->role && Yii::$app->user->identity->allow_create && Yii::$app->user->identity->user_number != 101){
-	$brokerId = Yii::$app->user->identity->id;
-} elseif($model->isNewRecord && !empty(Yii::$app->request->getQueryParam('Product', [])) && isset(Yii::$app->request->getQueryParam('Product', [])['broker_id'])) {
-	$brokerId = Yii::$app->request->getQueryParam('Product', [])['broker_id'];
-} elseif(!$model->isNewRecord && Yii::$app->user->identity->user_number != 101) {
-	$brokerId = $model->broker_id;
-} elseif($model->isNewRecord) {
-	$brokerId = Yii::$app->user->identity->id;
 }
 
 if($model->isNewRecord && !empty(Yii::$app->request->getQueryParam('Product', [])) && isset(Yii::$app->request->getQueryParam('Product', [])['sub_category'])) {
@@ -189,7 +166,7 @@ foreach ($languages as $value):
                                 <?=
                                 $form->field($model, 'product_sku', ['template' => '<div class="col-md-12" style="padding: 0"><label for="customer-name" class="field prepend-icon">
                                         {input}<label for="customer-name" class="field-icon"><i class="fa fa-barcode"></i></label></label>{error}</div>'])
-                                    ->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Product SKU'), 'value'=> $productSku])->label(false)
+                                    ->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Product Code'), 'value'=> $productSku])->label(false)
                                 ?>
                             </div>
 							<div class="col-md-2">
@@ -219,9 +196,9 @@ foreach ($languages as $value):
                             <div class="col-md-3">
                                 <?=
                                 $form->field($model, 'sub_category', ['template' => $template])->widget(Select2::className(), [
-                                    'data' => [0 => 'Վաճառք', 1 => 'Վարձակալություն'],
+                                    'data' => [0 => 'Sale', 1 => 'Rent'],
                                     'language' => Yii::$app->language,
-                                    'options' => ['placeholder' => Yii::t('app', 'Ընտրեք տեսակը'), 'value' => $subCategory],
+                                    'options' => ['placeholder' => Yii::t('app', 'Choose Type'), 'value' => $subCategory],
                                     'pluginOptions' => [
                                         'allowClear' => true,
                                         'multiple' => false,
@@ -236,7 +213,7 @@ foreach ($languages as $value):
                                 ?>
                                 <?=
                                 $form->field($model, 'status', ['template' => $template])->widget(Select2::className(), [
-                                    'data' => [Yii::t('app', "Unavailable"), Yii::t('app', "Active"), Yii::t('app', "Sales")],
+                                    'data' => [Yii::t('app', "Unavailable"), Yii::t('app', "Active"), Yii::t('app', "Rent")],
                                     'language' => Yii::$app->language,
                                     'options' => ['placeholder' => Yii::t('app', 'Select Status')],
                                     'pluginOptions' => [
@@ -254,6 +231,11 @@ foreach ($languages as $value):
                                 ?>
                             </div>
                         </div>
+
+                        
+
+
+
                         <div class="section row">
                             <h2 class="text-center fw400 text-muted"><?= Yii::t('app', 'Please fill address') ?></h2>
                             <div class="col-md-3">
