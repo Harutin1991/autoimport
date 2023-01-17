@@ -2,7 +2,6 @@
 
 namespace backend\models;
 
-use backend\models\Category;
 use Yii;
 use backend\models\ProductsDetails;
 use backend\models\Category;
