@@ -209,7 +209,14 @@ $action = '/message-system/create';
                         </ul>
                     </li>
                     <li>
-                        <a class="accordion-toggle <?php if (strpos($currentUrl, 'product') !== false || strpos($currentUrl, 'attribute') !== false || strpos($currentUrl, 'category') !== false): ?>menu-open <?php endif; ?>"
+                        <a class="accordion-toggle <?php if (strpos($currentUrl, 'product') !== false ||
+                            strpos($currentUrl, 'attribute') !== false ||
+                            strpos($currentUrl, 'category') !== false ||
+                            strpos($currentUrl, 'models') !== false ||
+                            strpos($currentUrl, 'marks') !== false ||
+                            strpos($currentUrl, 'engines') !== false ||
+                            strpos($currentUrl, 'exterior-colors') !== false ||
+                            strpos($currentUrl, 'interior-colors') !== false): ?>menu-open <?php endif; ?>"
                            href="#">
                             <span class="glyphicons glyphicons-cargo"></span>
                             <span class="sidebar-title"><?php echo Yii::t('app', 'Product Management') ?></span>
@@ -232,13 +239,13 @@ $action = '/message-system/create';
                                 <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
 							<span class="sidebar-title">' . Yii::t('app', 'Engines') . '</span>', Url::to(['engines/index'])) ?>
                             </li>
-                            <li class="menu-link <?php if ($currentUrl == '/exterior_colors/index'): ?>active<?php endif ?>">
+                            <li class="menu-link <?php if ($currentUrl == '/exterior-colors/index'): ?>active<?php endif ?>">
                                 <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
-							<span class="sidebar-title">' . Yii::t('app', 'Exterior Colors') . '</span>', Url::to(['exterior_colors/index'])) ?>
+							<span class="sidebar-title">' . Yii::t('app', 'Exterior Colors') . '</span>', Url::to(['exterior-colors/index'])) ?>
                             </li>
-                            <li class="menu-link <?php if ($currentUrl == '/interior_colors/index'): ?>active<?php endif ?>">
+                            <li class="menu-link <?php if ($currentUrl == '/interior-colors/index'): ?>active<?php endif ?>">
                                 <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
-							<span class="sidebar-title">' . Yii::t('app', 'Interior Colors') . '</span>', Url::to(['interior_colors/index'])) ?>
+							<span class="sidebar-title">' . Yii::t('app', 'Interior Colors') . '</span>', Url::to(['interior-colors/index'])) ?>
                             </li>
                             <li class="menu-link <?php if ($currentUrl == '/attribute/index'): ?>active<?php endif ?>">
                                 <?= Html::a('<span class="glyphicon glyphicon-book"></span>
