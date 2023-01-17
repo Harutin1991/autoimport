@@ -337,6 +337,34 @@ foreach ($languages as $value):
                                 ])->label(false)
                                 ?>
                             </div>
+                            <div class="col-md-2">
+                                <?=
+                                $form->field($model, 'wheel_type', ['template' => $template])->widget(Select2::className(), [
+                                    'data' => [Yii::t('app','Left'), Yii::t('app', 'Right')],
+                                    'language' => Yii::$app->language,
+                                    'options' => ['placeholder' => Yii::t('app', 'Select Steering Wheel Type')], //'onchange'=>'getProductAttr(this.value,"'.Yii::$app->language.'")'
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                        'multiple' => false,
+                                    ],
+                                    'pluginLoading' => false,
+                                ])->label(false)
+                                ?>
+                            </div>
+                            <div class="col-md-2">
+                                <?=
+                                $form->field($model, 'customer_type', ['template' => $template])->widget(Select2::className(), [
+                                    'data' => [Yii::t('app','Yes'), Yii::t('app', 'No')],
+                                    'language' => Yii::$app->language,
+                                    'options' => ['placeholder' => Yii::t('app', 'Select Customer Type')], //'onchange'=>'getProductAttr(this.value,"'.Yii::$app->language.'")'
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                        'multiple' => false,
+                                    ],
+                                    'pluginLoading' => false,
+                                ])->label(false)
+                                ?>
+                            </div>
                         </div>
 
                         <div class="section row">

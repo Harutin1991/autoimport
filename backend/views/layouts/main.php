@@ -216,7 +216,8 @@ $action = '/message-system/create';
                             strpos($currentUrl, 'marks') !== false ||
                             strpos($currentUrl, 'engines') !== false ||
                             strpos($currentUrl, 'exterior-colors') !== false ||
-                            strpos($currentUrl, 'interior-colors') !== false): ?>menu-open <?php endif; ?>"
+                            strpos($currentUrl, 'interior-colors') !== false ||
+                            strpos($currentUrl, 'body-types') !== false): ?>menu-open <?php endif; ?>"
                            href="#">
                             <span class="glyphicons glyphicons-cargo"></span>
                             <span class="sidebar-title"><?php echo Yii::t('app', 'Product Management') ?></span>
@@ -235,9 +236,9 @@ $action = '/message-system/create';
                                 <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
 							<span class="sidebar-title">' . Yii::t('app', 'Marks') . '</span>', Url::to(['marks/index'])) ?>
                             </li>
-                            <li class="menu-link <?php if ($currentUrl == '/body-type/index'): ?>active<?php endif ?>">
+                            <li class="menu-link <?php if ($currentUrl == '/body-types/index'): ?>active<?php endif ?>">
                                 <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
-							<span class="sidebar-title">' . Yii::t('app', 'Body Type') . '</span>', Url::to(['body-type/index'])) ?>
+							<span class="sidebar-title">' . Yii::t('app', 'Body Type') . '</span>', Url::to(['body-types/index'])) ?>
                             </li>
                             <li class="menu-link <?php if ($currentUrl == '/engines/index'): ?>active<?php endif ?>">
                                 <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
