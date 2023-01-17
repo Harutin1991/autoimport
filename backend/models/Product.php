@@ -479,4 +479,16 @@ class Product extends \yii\db\ActiveRecord
         $bodyTypes = BodyTypes::find()->all();
         return ArrayHelper::map($bodyTypes, 'id', 'name');
     }
+
+    public function getExteriorColors()
+    {
+        $bodyTypes = ExteriorColors::find()->all();
+        return ArrayHelper::map($bodyTypes, 'id', 'name');
+    }
+
+    public function getInteriorColors()
+    {
+        $bodyTypes = InteriorColors::find()->all();
+        return ArrayHelper::map($bodyTypes, 'id', 'name');
+    }
 }

@@ -211,6 +211,34 @@ foreach ($languages as $value):
                                 ])->label(false)
                                 ?>
                             </div>
+                            <div class="col-md-2">
+                                <?=
+                                $form->field($model, 'exterior_color_id', ['template' => $template])->widget(Select2::className(), [
+                                    'data' => $model->getExteriorColors(),
+                                    'language' => Yii::$app->language,
+                                    'options' => ['placeholder' => Yii::t('app', 'Select Exterior color')], //'onchange'=>'getProductAttr(this.value,"'.Yii::$app->language.'")'
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                        'multiple' => false,
+                                    ],
+                                    'pluginLoading' => false,
+                                ])->label(false)
+                                ?>
+                            </div>
+                            <div class="col-md-2">
+                                <?=
+                                $form->field($model, 'interior_color_id', ['template' => $template])->widget(Select2::className(), [
+                                    'data' => $model->getInteriorColors(),
+                                    'language' => Yii::$app->language,
+                                    'options' => ['placeholder' => Yii::t('app', 'Select Interior Color')], //'onchange'=>'getProductAttr(this.value,"'.Yii::$app->language.'")'
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                        'multiple' => false,
+                                    ],
+                                    'pluginLoading' => false,
+                                ])->label(false)
+                                ?>
+                            </div>
                         </div>
 
                         <div class="section row" style="margin-top: 20px;">
@@ -357,6 +385,20 @@ foreach ($languages as $value):
                                     'data' => [Yii::t('app','Yes'), Yii::t('app', 'No')],
                                     'language' => Yii::$app->language,
                                     'options' => ['placeholder' => Yii::t('app', 'Select Customer Type')], //'onchange'=>'getProductAttr(this.value,"'.Yii::$app->language.'")'
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                        'multiple' => false,
+                                    ],
+                                    'pluginLoading' => false,
+                                ])->label(false)
+                                ?>
+                            </div>
+                            <div class="col-md-2">
+                                <?=
+                                $form->field($model, 'sunroof', ['template' => $template])->widget(Select2::className(), [
+                                    'data' => [Yii::t('app','No'), Yii::t('app', 'Regular'), Yii::t('app', 'Panoramic')],
+                                    'language' => Yii::$app->language,
+                                    'options' => ['placeholder' => Yii::t('app', 'Select Sunroof')], //'onchange'=>'getProductAttr(this.value,"'.Yii::$app->language.'")'
                                     'pluginOptions' => [
                                         'allowClear' => true,
                                         'multiple' => false,
