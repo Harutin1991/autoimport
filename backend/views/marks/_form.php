@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
 
 /** @var yii\web\View $this */
 /** @var backend\models\Marks $model */
