@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use backend\models\Category;
 use Yii;
 use backend\models\ProductsDetails;
 use backend\models\Category;
@@ -12,12 +13,53 @@ use yii\helpers\Html;
 /**
  * This is the model class for table "product".
  *
- * @property integer $id
- * @property integer $ordering
- * @property integer $in_slider
- * @property integer $commercial
- * @property integer $popular
- * @property integer $best_seller
+ * @property int $id
+ * @property string $name
+ * @property string $description
+ * @property string|null $short_description
+ * @property int $status
+ * @property int|null $category_id
+ * @property int|null $parent_id
+ * @property int|null $mark_id
+ * @property int|null $model_id
+ * @property int|null $engine_id
+ * @property int|null $wheel_type
+ * @property int|null $customer_type
+ * @property int|null $body_type_id
+ * @property int|null $engine_size_id
+ * @property int|null $transmission
+ * @property int|null $drive_type
+ * @property float|null $mileage
+ * @property int|null $exterior_color_id
+ * @property int|null $interior_color_id
+ * @property int|null $sunroof
+ * @property string|null $product_sku
+ * @property int|null $ordering
+ * @property string|null $route_name
+ * @property int|null $popular
+ * @property int|null $commercial
+ * @property int|null $resized
+ * @property int|null $rate
+ * @property int|null $new
+ * @property float $price
+ * @property string|null $address
+ * @property string|null $city
+ * @property string|null $state
+ * @property string|null $email
+ * @property int|null $sub_category
+ * @property int|null $source
+ * @property string|null $json_attr
+ * @property int $forbid
+ * @property int $is_allow_to_show
+ * @property string $created_date
+ * @property string|null $updated_date
+ *
+ * @property Engines $engine
+ * @property EngineSizes $engineSize
+ * @property ExteriorColors $exteriorColor
+ * @property InteriorColors $interiorColor
+ * @property Marks $mark
+ * @property Models $model
  *
  * @property ProductAttribute[] $productAttributes
  * @property ProductParts[] $productParts
@@ -43,19 +85,24 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'price', 'category_id'], 'required'],
-            [['description', 'route_name', 'city', 'state', 'email', 'sub_category', 'source', 'json_attr'], 'string'],
-            [['status', 'category_id', 'rate'], 'integer'],
-            [['price'], 'number'],
+            [['name', 'price'], 'required'],
+            [['description', 'json_attr'], 'string'],
+            [['status', 'category_id', 'parent_id', 'mark_id', 'model_id', 'engine_id', 'wheel_type', 'customer_type', 'body_type_id', 'engine_size_id', 'transmission', 'drive_type', 'exterior_color_id', 'interior_color_id', 'sunroof', 'ordering', 'popular', 'commercial', 'resized', 'rate', 'new', 'sub_category', 'source', 'forbid', 'is_allow_to_show'], 'integer'],
+            [['mileage', 'price'], 'number'],
             [['created_date', 'updated_date', 'is_allow_to_show'], 'safe'],
-            [['name', 'short_description', 'product_sku', 'route_name'], 'string', 'max' => 250],
+            [['name', 'short_description', 'product_sku'], 'string', 'max' => 250],
+            [['route_name', 'address', 'city', 'state', 'email'], 'string', 'max' => 255],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
-            //[['route_name'], 'match', 'pattern' => "/^[^\_][a-z\_0-9]{0,}[^\_]$/"],
-            [['route_name'], 'unique'],
-            [['product_sku'], 'unique'],
+            [['engine_id'], 'exist', 'skipOnError' => true, 'targetClass' => Engines::class, 'targetAttribute' => ['engine_id' => 'id']],
+            [['engine_size_id'], 'exist', 'skipOnError' => true, 'targetClass' => EngineSizes::class, 'targetAttribute' => ['engine_size_id' => 'id']],
+            [['exterior_color_id'], 'exist', 'skipOnError' => true, 'targetClass' => ExteriorColors::class, 'targetAttribute' => ['exterior_color_id' => 'id']],
+            [['interior_color_id'], 'exist', 'skipOnError' => true, 'targetClass' => InteriorColors::class, 'targetAttribute' => ['interior_color_id' => 'id']],
+            [['model_id'], 'exist', 'skipOnError' => true, 'targetClass' => Models::class, 'targetAttribute' => ['model_id' => 'id']],
+            [['mark_id'], 'exist', 'skipOnError' => true, 'targetClass' => Marks::class, 'targetAttribute' => ['mark_id' => 'id']],
             [['source'], 'unique', 'on' => 'update', 'when' => function ($model) {
                 return $model->isAttributeChanged('source');
             }],
+            [['route_name'], 'unique'],
             [['popular'], 'default', 'value' => 0],
             [['new'], 'default', 'value' => 0],
         ];
@@ -72,23 +119,102 @@ class Product extends \yii\db\ActiveRecord
             'description' => Yii::t('app', 'Description'),
             'short_description' => Yii::t('app', 'Short Description'),
             'status' => Yii::t('app', 'Status'),
-            'price' => Yii::t('app', 'Price'),
             'category_id' => Yii::t('app', 'Category ID'),
-            'rate' => Yii::t('app', 'Rate'),
-            'created_date' => Yii::t('app', 'Created Date'),
-            'updated_date' => Yii::t('app', 'Updated Date'),
-            'product_sku' => Yii::t('app', 'Product SKU'),
-            'route_name' => Yii::t('app', 'Name In Route'),
-            'popular' => Yii::t('app', 'popular'),
+            'parent_id' => Yii::t('app', 'Parent ID'),
+            'mark_id' => Yii::t('app', 'Mark ID'),
+            'model_id' => Yii::t('app', 'Model ID'),
+            'engine_id' => Yii::t('app', 'Engine ID'),
+            'wheel_type' => Yii::t('app', 'Wheel Type'),
+            'customer_type' => Yii::t('app', 'Customer Type'),
+            'body_type_id' => Yii::t('app', 'Body Type ID'),
+            'engine_size_id' => Yii::t('app', 'Engine Size ID'),
+            'transmission' => Yii::t('app', 'Transmission'),
+            'drive_type' => Yii::t('app', 'Drive Type'),
+            'mileage' => Yii::t('app', 'Mileage'),
+            'exterior_color_id' => Yii::t('app', 'Exterior Color ID'),
+            'interior_color_id' => Yii::t('app', 'Interior Color ID'),
+            'sunroof' => Yii::t('app', 'Sunroof'),
+            'product_sku' => Yii::t('app', 'Product Sku'),
+            'ordering' => Yii::t('app', 'Ordering'),
+            'route_name' => Yii::t('app', 'Route Name'),
+            'popular' => Yii::t('app', 'Popular'),
             'commercial' => Yii::t('app', 'Commercial'),
+            'resized' => Yii::t('app', 'Resized'),
+            'rate' => Yii::t('app', 'Rate'),
+            'new' => Yii::t('app', 'New'),
+            'price' => Yii::t('app', 'Price'),
             'address' => Yii::t('app', 'Address'),
             'city' => Yii::t('app', 'City'),
             'state' => Yii::t('app', 'State'),
-            'sub_category' => Yii::t('app', 'Type'),
             'email' => Yii::t('app', 'Email'),
+            'sub_category' => Yii::t('app', 'Sub Category'),
             'source' => Yii::t('app', 'Source'),
-            'json_attr' => Yii::t('app', 'Attributes'),
+            'json_attr' => Yii::t('app', 'Json Attr'),
+            'forbid' => Yii::t('app', 'Forbid'),
+            'is_allow_to_show' => Yii::t('app', 'Is Allow To Show'),
+            'created_date' => Yii::t('app', 'Created Date'),
+            'updated_date' => Yii::t('app', 'Updated Date'),
         ];
+    }
+
+    /**
+     * Gets query for [[Engine]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEngine()
+    {
+        return $this->hasOne(Engines::class, ['id' => 'engine_id']);
+    }
+
+    /**
+     * Gets query for [[EngineSize]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEngineSize()
+    {
+        return $this->hasOne(EngineSizes::class, ['id' => 'engine_size_id']);
+    }
+
+    /**
+     * Gets query for [[ExteriorColor]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getExteriorColor()
+    {
+        return $this->hasOne(ExteriorColors::class, ['id' => 'exterior_color_id']);
+    }
+
+    /**
+     * Gets query for [[InteriorColor]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInteriorColor()
+    {
+        return $this->hasOne(InteriorColors::class, ['id' => 'interior_color_id']);
+    }
+
+    /**
+     * Gets query for [[Mark]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMark()
+    {
+        return $this->hasOne(Marks::class, ['id' => 'mark_id']);
+    }
+
+    /**
+     * Gets query for [[Model]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getModel()
+    {
+        return $this->hasOne(Models::class, ['id' => 'model_id']);
     }
 
     /**

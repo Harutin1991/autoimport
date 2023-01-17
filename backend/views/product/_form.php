@@ -232,7 +232,7 @@ foreach ($languages as $value):
                             </div>
                         </div>
 
-                        
+
 
 
 
