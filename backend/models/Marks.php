@@ -79,4 +79,10 @@ class Marks extends \yii\db\ActiveRecord
     {
         return $this->hasMany(TrMarks::class, ['mark_id' => 'id']);
     }
+
+    public function getAllModels()
+    {
+        $models = Models::find()->all();
+        return ArrayHelper::map($models, 'id', 'name');
+    }
 }
