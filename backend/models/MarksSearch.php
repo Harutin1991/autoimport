@@ -17,7 +17,7 @@ class MarksSearch extends Marks
     public function rules()
     {
         return [
-            [['id', 'status'], 'integer'],
+            [['id', 'model_id', 'status'], 'integer'],
             [['name'], 'safe'],
         ];
     }
@@ -59,6 +59,7 @@ class MarksSearch extends Marks
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'model_id' => $this->model_id,
             'status' => $this->status,
         ]);
 
