@@ -247,7 +247,7 @@ $action = '/message-system/create';
                             </li>
                             <li class="menu-link <?php if ($currentUrl == '/engine-sizes/index'): ?>active<?php endif ?>">
                                 <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
-							<span class="sidebar-title">' . Yii::t('app', 'Engine Size') . '</span>', Url::to(['engine-size/index'])) ?>
+							<span class="sidebar-title">' . Yii::t('app', 'Engine Size') . '</span>', Url::to(['engine-sizes/index'])) ?>
                             </li>
                             <li class="menu-link <?php if ($currentUrl == '/exterior-colors/index'): ?>active<?php endif ?>">
                                 <?= Html::a('<span class="glyphicon glyphicon-tags"></span>
