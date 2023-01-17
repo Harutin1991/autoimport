@@ -85,8 +85,8 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'price'], 'required'],
-            [['description', 'json_attr'], 'string'],
-            [['status', 'category_id', 'parent_id', 'mark_id', 'model_id', 'engine_id', 'wheel_type', 'customer_type', 'body_type_id', 'engine_size_id', 'transmission', 'drive_type', 'exterior_color_id', 'interior_color_id', 'sunroof', 'ordering', 'popular', 'commercial', 'resized', 'rate', 'new', 'sub_category', 'source', 'forbid', 'is_allow_to_show'], 'integer'],
+            [['description', 'json_attr', 'source'], 'string'],
+            [['status', 'category_id', 'parent_id', 'mark_id', 'model_id', 'engine_id', 'wheel_type', 'customer_type', 'body_type_id', 'engine_size_id', 'transmission', 'drive_type', 'exterior_color_id', 'interior_color_id', 'sunroof', 'ordering', 'popular', 'commercial', 'resized', 'rate', 'new', 'sub_category', 'is_allow_to_show'], 'integer'],
             [['mileage', 'price'], 'number'],
             [['created_date', 'updated_date', 'is_allow_to_show'], 'safe'],
             [['name', 'short_description', 'product_sku'], 'string', 'max' => 250],
@@ -460,5 +460,17 @@ class Product extends \yii\db\ActiveRecord
     {
         $marks = Marks::find()->all();
         return ArrayHelper::map($marks, 'id', 'name');
+    }
+
+    public function getAllEngines()
+    {
+        $engine = Engines::find()->all();
+        return ArrayHelper::map($engine, 'id', 'name');
+    }
+
+    public function getAllEngineSizes()
+    {
+        $engineSize = EngineSizes::find()->all();
+        return ArrayHelper::map($engineSize, 'id', 'name');
     }
 }

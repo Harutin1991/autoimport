@@ -169,9 +169,16 @@ foreach ($languages as $value):
                                     ->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Product Code'), 'value'=> $productSku])->label(false)
                                 ?>
                             </div>
-							<div class="col-md-2">
+							<div class="col-md-1">
                                 <?=
                                 $form->field($model, 'price', ['template' => '<div class="col-md-12" style="padding: 0"><label for="customer-name" class="field prepend-icon">
+                                    {input}<label for="customer-name" class="field-icon"><i class="fa fa-dollar"></i></label></label>{error}</div>'])
+                                    ->textInput(['placeholder' => Yii::t('app', 'Price')])->label(false)
+                                ?>
+                            </div>
+                            <div class="col-md-2">
+                                <?=
+                                $form->field($model, 'mileage', ['template' => '<div class="col-md-12" style="padding: 0"><label for="customer-name" class="field prepend-icon">
                                     {input}<label for="customer-name" class="field-icon"><i class="fa fa-dollar"></i></label></label>{error}</div>'])
                                     ->textInput(['placeholder' => Yii::t('app', 'Price')])->label(false)
                                 ?>
@@ -207,7 +214,7 @@ foreach ($languages as $value):
                         </div>
 
                         <div class="section row" style="margin-top: 20px;">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <?=
                                 $form->field($model, 'category_id', ['template' => $template])->widget(Select2::className(), [
                                     'data' => $model->getAllCategories(),
@@ -221,7 +228,7 @@ foreach ($languages as $value):
                                 ])->label(false)
                                 ?>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <?=
                                 $form->field($model, 'sub_category', ['template' => $template])->widget(Select2::className(), [
                                     'data' => [0 => 'Sale', 1 => 'Rent'],
@@ -235,7 +242,7 @@ foreach ($languages as $value):
                                 ])->label(false)
                                 ?>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <?php
                                 if (!$model->status && $model->status !== 0) $model->status = 1
                                 ?>
@@ -252,17 +259,44 @@ foreach ($languages as $value):
                                 ])->label(false)
                                 ?>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
+                                <?=
+                                $form->field($model, 'engine_id', ['template' => $template])->widget(Select2::className(), [
+                                    'data' => $model->getAllEngines(),
+                                    'language' => Yii::$app->language,
+                                    'options' => ['placeholder' => Yii::t('app', 'Select Engine')], //'onchange'=>'getProductAttr(this.value,"'.Yii::$app->language.'")'
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                        'multiple' => false,
+                                    ],
+                                    'pluginLoading' => false,
+                                ])->label(false)
+                                ?>
+                            </div>
+                            <div class="col-md-2">
+                                <?=
+                                $form->field($model, 'engine_size_id', ['template' => $template])->widget(Select2::className(), [
+                                    'data' => $model->getAllEngineSizes(),
+                                    'language' => Yii::$app->language,
+                                    'options' => ['placeholder' => Yii::t('app', 'Select Engine Size')], //'onchange'=>'getProductAttr(this.value,"'.Yii::$app->language.'")'
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                        'multiple' => false,
+                                    ],
+                                    'pluginLoading' => false,
+                                ])->label(false)
+                                ?>
+                            </div>
+                            <div class="col-md-2">
                                 <?=
                                 $form->field($model, 'source', ['template' => '{input}{error}'])
                                     ->textInput(['placeholder' => Yii::t('app', 'Source')])->label(false)
                                 ?>
                             </div>
                         </div>
+                        <div class="section row" style="margin-top: 20px;">
 
-
-
-
+                        </div>
 
                         <div class="section row">
                             <h2 class="text-center fw400 text-muted"><?= Yii::t('app', 'Please fill address') ?></h2>
